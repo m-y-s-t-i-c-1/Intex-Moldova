@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="produse_page_title">Produse INTEX | Catalog Complet</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../assets/main.css">
+    <link rel="stylesheet" href="../assets/css/produse.css">
+</head>
+
+<body>
+
+    <nav>
+        <button class="hamburger-btn" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="site-title">INTEX<span>MOLDOVA</span></div>
+
+        <!-- Desktop horizontal nav -->
+        <ul class="nav-menu">
+            <li><a href="../index.html" data-i18n="menu_home">Acasă</a></li>
+            <li><a href="#" class="active" data-i18n="menu_products">Produse</a></li>
+            <li><a href="../index.html#despre" data-i18n="menu_about">Despre Noi</a></li>
+            <li><a href="../pagini/FAQ.html" data-i18n="menu_faq">FAQ</a></li>
+            <li><a href="../pagini/returnare.html" data-i18n="menu_policy">Politica de Retur</a></li>
+            <li><a href="../index.html#contact" data-i18n="menu_contact">Contacte</a></li>
+        </ul>
+
+        <!-- Mobile menu (overlay) -->
+        <ul class="nav-menu mobile">
+            <li class="menu-title">Meniu <button class="close-mobile" aria-label="Închide">&times;</button></li>
+            <li><a href="../index.html" data-i18n="menu_home">Acasă</a></li>
+            <li><a href="#" class="active" data-i18n="menu_products">Produse</a></li>
+            <li><a href="../index.html#despre" data-i18n="menu_about">Despre Noi</a></li>
+            <li><a href="../pagini/FAQ.html" data-i18n="menu_faq">FAQ</a></li>
+            <li><a href="../pagini/returnare.html" data-i18n="menu_policy">Politica de Retur</a></li>
+            <li><a href="../index.html#contact" data-i18n="menu_contact">Contacte</a></li>
+        </ul>
+
+        <div class="nav-controls">
+            <button class="search-btn" id="searchBtn" title="Căutare">
+                <i class="fas fa-search"></i>
+            </button>
+
+            <button class="cart-btn" id="cartBtn" title="Coșul Meu">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+
+            <div class="lang-switch">
+                <span class="lang-opt active" data-lang="ro" onclick="setLanguage('ro')">RO</span>
+                <span style="opacity: 0.3">|</span>
+                <span class="lang-opt" data-lang="ru" onclick="setLanguage('ru')">RU</span>
+                <span style="opacity: 0.3">|</span>
+                <span class="lang-opt" data-lang="en" onclick="setLanguage('en')">EN</span>
+            </div>
+
+            <div class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon" id="theme-icon"></i>
+            </div>
+
+            <button class="login-btn" id="loginBtn" title="Contul Meu">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="header-content">
+            <h1 data-i18n="products_title">Catalogul Nostru Complet</h1>
+            <p data-i18n="products_subtitle">Explorați cele 14 categorii de produse Intex, de la piscine la accesorii și
+                piese de schimb.</p>
+        </div>
+    </header>
+
+    <section class="products-section">
+
+        <aside class="sidebar">
+            <h3 data-i18n="filter_title"><i class="fas fa-filter"></i> Filtru Rapid</h3>
+            <ul class="filter-list" id="filterList">
+                <li data-i18n="filter_all" data-filter="all" class="active">Toate Produsele</li>
+                <li data-i18n="cat_pools" data-filter="pools">Piscine INTEX</li>
+                <li data-i18n="cat_accessories" data-filter="accessories">Accesorii</li>
+                <li data-i18n="cat_spares" data-filter="spares">Piese de Schimb</li>
+            </ul>
+        </aside>
+
+        <div class="product-content-wrapper">
+
+            <!-- CATEGORIES GRID -->
+
+            <div class="category-grid" id="category-menu"></div>
+
+
+            <!-- PRODUCT LIST / GRID (vizibil când selectezi o categorie) -->
+            <div class="product-list-container hidden" id="product-list-container">
+                <button class="btn-back" id="backToCategoriesBtn">
+                    <i class="fas fa-arrow-left"></i> <span id="backBtnText" data-i18n="back_btn_default">Înapoi</span>
+                </button>
+
+                <h2 id="currentCategoryTitle" class="list-title"></h2>
+
+                <div class="product-list-grid" id="productListGrid"></div>
+
+                <div id="pagination-container" class="pagination"></div>
+
+            </div>
+
+
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3 data-i18n="contact_title">Contactează-ne</h3>
+
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong data-i18n="addr_label">Adresa:</strong>
+                        <p>ул. Заводская 201/12, Кишинев</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <strong data-i18n="phone_label">Telefon:</strong>
+                        <p>+373 69 122 879</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong data-i18n="email_label">Email:</strong>
+                        <p>zovagrup@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong data-i18n="hours_label">Program:</strong>
+                        <p data-i18n="hours_val">Luni - Vineri: 09:00 - 17:00 (pauza 11:45-12:45)<br>Sâmbată: 11:00 - 13:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2721.059431468007!2d28.909538!3d46.999806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDbCsDU5JzU5LjMiTiAyOMKwNTQnMzQuMyJF!5e0!3m2!1sro!2s!4v1767444291941!5m2!1sro!2s" 
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+
+        <div class="footer-bottom">© 2023 Intex Moldova. All rights reserved.</div>
+    </section>
+
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-content">
+            <span class="close-btn" onclick="closeSearch()">×</span>
+            <form onsubmit="performSearch(event)">
+                <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Căutați produse, accesorii, servicii...">
+                <button class="btn-main" type="submit" data-i18n="search_button">Căută</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="cart-overlay" class="cart-overlay">
+        <div class="cart-content">
+            <span class="close-btn" onclick="closeCart()">×</span>
+            <h2 data-i18n="cart_title">Coșul de Cumpărături</h2>
+
+            <div id="cart-items-container" class="cart-items-container"></div>
+
+            <div class="cart-summary">
+                <p data-i18n="cart_total">Total:</p>
+                <strong id="cart-total">0.00 LEI</strong>
+            </div>
+
+            <a href="checkout.html" class="btn-main checkout-btn" data-i18n="cart_checkout">Finalizează Comanda</a>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="login-modal">
+        <div class="login-content">
+            <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+            
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Autentificare</button>
+                <button class="tab-btn" onclick="switchTab('register')">Înregistrare</button>
+            </div>
+            
+            <div id="login-form" class="form-container active">
+                <h3 data-i18n="login_title">Autentificare</h3>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login-email" data-i18n="email_label">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password" data-i18n="password_label">Parolă</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn-main" data-i18n="login_btn">Autentificare</button>
+                </form>
+                <div class="form-footer">
+                    <a href="#" data-i18n="forgot_password">Ai uitat parola?</a>
+                </div>
+            </div>
+            
+            <div id="register-form" class="form-container">
+                <h3 data-i18n="register_title">Înregistrare</h3>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="register-name" data-i18n="name_label">Nume complet</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email" data-i18n="email_label">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-phone" data-i18n="phone_label">Telefon</label>
+                        <input type="tel" id="register-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password" data-i18n="password_label">Parolă</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password" data-i18n="confirm_password">Confirmă parola</label>
+                        <input type="password" id="register-confirm-password" required>
+                    </div>
+                    <button type="submit" class="btn-main" data-i18n="register_btn">Înregistrare</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/data.js?v=1"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/main.js"></script>
+    <script src="../assets/js/produse.js"></script>
+</body>
+
+</html>

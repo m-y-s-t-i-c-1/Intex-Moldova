@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="page_title">Checkout | INTEX Moldova</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../assets/main.css">
+    <link rel="stylesheet" href="../assets/css/checkout.css">
+</head>
+
+<body>
+
+    <nav>
+        <button class="hamburger-btn" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="site-title">INTEX<span>MOLDOVA</span></div>
+
+        <!-- Desktop horizontal nav -->
+        <ul class="nav-menu">
+            <li><a href="../index.html" data-i18n="menu_home">Acasă</a></li>
+            <li><a href="../pagini/produse.html" data-i18n="menu_products">Produse</a></li>
+            <li><a href="../index.html#despre" data-i18n="menu_about">Despre Noi</a></li>
+            <li><a href="../pagini/FAQ.html" data-i18n="menu_faq">FAQ</a></li>
+            <li><a href="../pagini/returnare.html" data-i18n="menu_policy">Politica de Retur</a></li>
+            <li><a href="../index.html#contact" data-i18n="menu_contact">Contacte</a></li>
+        </ul>
+
+        <!-- Mobile menu (overlay) -->
+        <ul class="nav-menu mobile">
+            <li class="menu-title">Meniu <button class="close-mobile" aria-label="Închide">&times;</button></li>
+            <li><a href="../index.html" data-i18n="menu_home">Acasă</a></li>
+            <li><a href="../pagini/produse.html" data-i18n="menu_products">Produse</a></li>
+            <li><a href="../index.html#despre" data-i18n="menu_about">Despre Noi</a></li>
+            <li><a href="../pagini/FAQ.html" data-i18n="menu_faq">FAQ</a></li>
+            <li><a href="../pagini/returnare.html" data-i18n="menu_policy">Politica de Retur</a></li>
+            <li><a href="../index.html#contact" data-i18n="menu_contact">Contacte</a></li>
+        </ul>
+
+        <div class="nav-controls">
+            <button class="search-btn" id="searchBtn" title="Căutare">
+                <i class="fas fa-search"></i>
+            </button>
+
+            <div class="lang-switch">
+                <span class="lang-opt active" data-lang="ro" onclick="setLanguage('ro')">RO</span>
+                <span style="opacity: 0.3">|</span>
+                <span class="lang-opt" data-lang="ru" onclick="setLanguage('ru')">RU</span>
+                <span style="opacity: 0.3">|</span>
+                <span class="lang-opt" data-lang="en" onclick="setLanguage('en')">EN</span>
+            </div>
+
+            <div class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon" id="theme-icon"></i>
+            </div>
+
+            <button class="login-btn" id="loginBtn" title="Contul Meu">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section class="checkout-container">
+        <div class="checkout-wrapper">
+            <div class="checkout-header">
+                <h1 data-i18n="checkout_title">Finalizare Comandă</h1>
+                <p data-i18n="checkout_subtitle">Completați informațiile pentru a finaliza comanda</p>
+            </div>
+
+            <div class="checkout-content">
+                <!-- Order Summary (Right Side) -->
+                <div class="order-summary">
+                    <h2 data-i18n="checkout_order_summary">Rezumat Comandă</h2>
+                    <div id="checkout-items-container" class="checkout-items"></div>
+                    
+                    <div class="summary-row">
+                        <span data-i18n="checkout_subtotal">Subtotal:</span>
+                        <span id="checkout-subtotal">0.00 LEI</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span data-i18n="checkout_total">Total:</span>
+                        <span id="checkout-total">0.00 LEI</span>
+                    </div>
+                </div>
+
+                <!-- Checkout Form (Left Side) -->
+                <div class="checkout-form">
+                    <form id="checkout-form">
+                        <!-- Personal Info -->
+                        <div class="form-section">
+                            <h3 data-i18n="checkout_personal_info">Informații Personale</h3>
+                            
+                            <div class="form-group">
+                                <label for="name" data-i18n="checkout_full_name">Nume Complet</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" data-i18n="checkout_email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" data-i18n="checkout_phone">Telefon</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <div class="form-section">
+                            <h3 data-i18n="checkout_shipping_address">Adresa de Livrare</h3>
+
+                            <div class="form-group">
+                                <label for="city" data-i18n="checkout_city">Oraș</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address" data-i18n="checkout_address">Adresa</label>
+                                <input type="text" id="address" name="address" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="postal" data-i18n="checkout_postal_code">Cod Poștal</label>
+                                <input type="text" id="postal" name="postal">
+                            </div>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="form-section">
+                            <h3 data-i18n="checkout_payment_method">Metoda de Plată</h3>
+
+                            <div class="form-group radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="payment" value="cash" checked>
+                                    <span data-i18n="checkout_cash_on_delivery">Plată la Livrare</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="payment" value="card">
+                                    <span data-i18n="checkout_card_payment">Plată cu Card la Livrare</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Additional Info -->
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label for="notes" data-i18n="checkout_notes">Note Suplimentare</label>
+                                <textarea id="notes" name="notes" rows="4" placeholder="Instrucțiuni speciale pentru livrare..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="form-actions">
+                            <a href="./produse.html" class="btn-secondary" data-i18n="checkout_continue_shopping">Continuă Cumpărăturile</a>
+                            <button type="submit" class="btn-main checkout-submit" data-i18n="checkout_place_order">Plasează Comanda</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-bottom">© 2023 Intex Moldova. All rights reserved.</div>
+    </footer>
+
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/main.js"></script>
+    <script src="../assets/js/checkout.js"></script>
+</body>
+
+</html>

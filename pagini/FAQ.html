@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="faq_page_title">FAQ | Întrebări Frecvente INTEX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../assets/main.css">
+    <link rel="stylesheet" href="../assets/css/returnare.css"> 
+</head>
+<body>
+
+    <nav>
+        <button class="hamburger-btn" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="site-title">INTEX<span>MOLDOVA</span></div>
+        
+        <!-- Desktop horizontal nav -->
+        <ul class="nav-menu">
+            <li><a href="../index.html" data-i18n="menu_home">Acasă</a></li>
+            <li><a href="../pagini/produse.html" data-i18n="menu_products">Produse</a></li>
+            <li><a href="../index.html#despre" data-i18n="menu_about">Despre Noi</a></li>
+            <li><a href="#" class="active" data-i18n="menu_faq">FAQ</a></li>
+            <li><a href="../pagini/returnare.html" data-i18n="menu_policy">Politica de Retur</a></li>
+            <li><a href="../index.html#contact" data-i18n="menu_contact">Contacte</a></li>
+        </ul>
+
+        <!-- Mobile menu (overlay) -->
+        <ul class="nav-menu mobile">
+            <li class="menu-title">Meniu <button class="close-mobile" aria-label="Închide">&times;</button></li>
+            <li><a href="../index.html" data-i18n="menu_home">Acasă</a></li>
+            <li><a href="../pagini/produse.html" data-i18n="menu_products">Produse</a></li>
+            <li><a href="../index.html#despre" data-i18n="menu_about">Despre Noi</a></li>
+            <li><a href="#" class="active" data-i18n="menu_faq">FAQ</a></li>
+            <li><a href="../pagini/returnare.html" data-i18n="menu_policy">Politica de Retur</a></li>
+            <li><a href="../index.html#contact" data-i18n="menu_contact">Contacte</a></li>
+        </ul>
+
+        <div class="nav-controls">
+            <button class="search-btn" id="searchBtn" title="Căutare">
+                <i class="fas fa-search"></i>
+            </button>
+            
+            <div class="lang-switch">
+                <span class="lang-opt active" onclick="setLanguage('ro')">RO</span>
+                <span style="opacity: 0.3">|</span>
+                <span class="lang-opt" onclick="setLanguage('ru')">RU</span>
+                <span style="opacity: 0.3">|</span>
+                <span class="lang-opt" onclick="setLanguage('en')">EN</span>
+            </div>
+
+            <div class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i>
+            </div>
+
+            <button class="login-btn" id="loginBtn" title="Contul Meu">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="page-header faq-header">
+        <div class="header-content">
+            <h1 data-i18n="faq_title">Întrebări Frecvente (FAQ)</h1>
+            <p data-i18n="faq_subtitle">Găsiți rapid răspunsuri la cele mai comune întrebări despre piscine, accesorii și comenzi.</p>
+        </div>
+    </header>
+
+    <section class="faq-section">
+        <div class="faq-container">
+            
+            <h2 class="faq-category-title" data-i18n="cat_orders"><i class="fas fa-shipping-fast"></i> Comenzi și Livrare</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" data-i18n="q1_title">Care este timpul de livrare estimat?</button>
+                    <div class="accordion-content">
+                        <p data-i18n="q1_answer">De obicei, livrarea durează **1-2 zile lucrătoare** pe teritoriul Moldovei, din momentul confirmării comenzii. În perioadele de vârf (mai-august), livrarea poate dura până la 3 zile.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" data-i18n="q2_title">Pot ridica personal produsele?</button>
+                    <div class="accordion-content">
+                        <p data-i18n="q2_answer">Da, puteți ridica produsele direct de la depozitul sau showroom-ul nostru din Chișinău, la adresa Calea Orheiului 123. Vă rugăm să ne contactați în prealabil pentru a verifica stocul.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header" data-i18n="q5_title">Care sunt metodele de plată acceptate?</button>
+                    <div class="accordion-content">
+                        <p data-i18n="q5_answer">Acceptăm plata **ramburs** (cash la livrare), **transfer bancar** și plata cu **cardul online** (Visa/Mastercard) prin intermediul procesatorului nostru de plăți securizat.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <h2 class="faq-category-title" data-i18n="cat_pools"><i class="fas fa-swimming-pool"></i> Despre Piscine INTEX</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" data-i18n="q3_title">Cum trebuie să depozitez piscina pe timp de iarnă?</button>
+                    <div class="accordion-content">
+                        <p data-i18n="q3_answer">Piscina trebuie curățată, uscată complet și împachetată în cutia originală. Este esențial să o depozitați într-un loc **uscat** și **ferit de îngheț** (de preferat la temperaturi între 5°C și 35°C).</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header" data-i18n="q4_title">Cât de des trebuie să schimb apa din piscină?</button>
+                    <div class="accordion-content">
+                        <p data-i18n="q4_answer">Dacă folosiți un **sistem de filtrare** adecvat și produse de **îngrijire a apei** (clor, algicid), nu este necesar să schimbați apa pe tot parcursul sezonului. Schimbul total se face de obicei doar la sfârșitul sezonului. **Testați săptămânal nivelul pH-ului!**</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header" data-i18n="q6_title">Cât durează instalarea unei piscine cu cadru metalic?</button>
+                    <div class="accordion-content">
+                        <p data-i18n="q6_answer">În funcție de mărime, instalarea piscinei (fără umplere cu apă) durează în general între **45 de minute și 2 ore**, fiind necesare de obicei două persoane. Asigurați-vă că suprafața este perfect **plană**.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            
+            <h2 class="faq-category-title" data-i18n="cat_warranty"><i class="fas fa-wrench"></i> Garanție și Service</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" data-i18n="q7_title">Ce garanție oferă produsele INTEX?</button>
+                    <div class="accordion-content">
+                        <p data-i18n="q7_answer">Produsele INTEX (piscine, pompe, accesorii) beneficiază de o garanție standard de **12 luni** de la data achiziției. Vă rugăm să păstrați bonul fiscal și cutia originală.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header" data-i18n="q8_title">Unde pot găsi piese de schimb?</button>
+                    <div class="accordion-content">
+                        <p data-i18n="q8_answer">Fiind distribuitor oficial, avem un stoc larg de piese de schimb. Puteți verifica disponibilitatea în secțiunea **Produse -> Piese de Schimb** sau ne puteți contacta direct cu numărul de serie al produsului dumneavoastră.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="need-help-card">
+                <h3 data-i18n="need_help_title">Nu ați găsit răspunsul?</h3>
+                <p data-i18n="need_help_text">Echipa noastră de suport este gata să vă ajute cu orice întrebare specifică.</p>
+                <a href="../index.html#contact" class="btn-main small-btn" data-i18n="contact_us_btn">Contactați-ne Acum</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3 data-i18n="contact_title">Contactează-ne</h3>
+                
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong data-i18n="addr_label">Adresa:</strong>
+                        <p>ул. Заводская 201/12, Кишинев</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <strong data-i18n="phone_label">Telefon:</strong>
+                        <p>+373 69 122 879</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong data-i18n="email_label">Email:</strong>
+                        <p>zovagrup@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong data-i18n="hours_label">Program:</strong>
+                        <p data-i18n="hours_val">Luni - Duminică: 09:00 - 19:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2721.059431468007!2d28.909538!3d46.999806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDbCsDU5JzU5LjMiTiAyOMKwNTQnMzQuMyJF!5e0!3m2!1sro!2s!4v1767444291941!5m2!1sro!2s" 
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © 2023 Intex Moldova. All rights reserved.
+        </div>
+    </section>
+    
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-content">
+            <span class="close-btn" onclick="closeSearch()">×</span>
+            <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Căutați produse, accesorii, servicii...">
+            <a href="#" class="btn-main" data-i18n="search_button" onclick="performSearch(event)">Căută</a>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="login-modal">
+        <div class="login-content">
+            <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+            
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Autentificare</button>
+                <button class="tab-btn" onclick="switchTab('register')">Înregistrare</button>
+            </div>
+            
+            <div id="login-form" class="form-container active">
+                <h3 data-i18n="login_title">Autentificare</h3>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login-email" data-i18n="email_label">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password" data-i18n="password_label">Parolă</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn-main" data-i18n="login_btn">Autentificare</button>
+                </form>
+                <div class="form-footer">
+                    <a href="#" data-i18n="forgot_password">Ai uitat parola?</a>
+                </div>
+            </div>
+            
+            <div id="register-form" class="form-container">
+                <h3 data-i18n="register_title">Înregistrare</h3>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="register-name" data-i18n="name_label">Nume complet</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email" data-i18n="email_label">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-phone" data-i18n="phone_label">Telefon</label>
+                        <input type="tel" id="register-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password" data-i18n="password_label">Parolă</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password" data-i18n="confirm_password">Confirmă parola</label>
+                        <input type="password" id="register-confirm-password" required>
+                    </div>
+                    <button type="submit" class="btn-main" data-i18n="register_btn">Înregistrare</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/pagini.js"></script>
+    <script src="../assets/main.js"></script>
+</body>
+</html>
