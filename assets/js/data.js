@@ -1,16 +1,25 @@
 // Determine base path based on current location
-const BASE_PATH = '/Intex/';
+function getBasePath() {
+    const currentPath = window.location.pathname;
+    // If on a page in /pagini/, go back to root, otherwise stay at root
+    if (currentPath.includes('/pagini/')) {
+        return '../';
+    }
+    return './';
+}
+
+const BASE_PATH = getBasePath();
 
 // Helper function to standardize image paths
 function standardizeImagePath(path) {
     if (!path) return BASE_PATH + 'assets/img/no-image.jpg';
     
-    // If already starts with BASE_PATH + 'assets/img/', leave as is
-    if (path.startsWith(BASE_PATH + 'assets/img/')) {
+    // If already starts with assets/img/, leave as is (relative path)
+    if (path.startsWith('assets/img/')) {
         return path;
     }
     
-    // If doesn't have any prefix, add it
+    // If path doesn't include 'assets/img/', add BASE_PATH + assets/img/
     if (!path.includes('assets/img/')) {
         return BASE_PATH + 'assets/img/' + path;
     }

@@ -34,6 +34,7 @@
     function getAllProducts() {
         // Dacă avem funcția de descrieri, folosește-o
         if (typeof getAllProductsWithDescriptions === 'function') {
+            console.log('[DEBUG] Using getAllProductsWithDescriptions from descrieri_produse.js');
             const allProducts = getAllProductsWithDescriptions();
             const accessoryAliases = ['accessories', 'swim-accessories', 'boats_pool_accessories', 'boats_care', 'pool_accessories'];
             
@@ -48,6 +49,8 @@
                 };
             });
         }
+        
+        console.log('[DEBUG] getAllProductsWithDescriptions NOT available, using fallback');
         
         // Fallback la vechea metodă dacă descriptions.js nu este încărcat
         const list = [];
@@ -84,6 +87,25 @@
 
                 list.push(item);
             });
+        }
+
+        // Dacă există funcționalitate pentru a atașa descrieri, folosește-o
+        if (typeof enhanceExistingProducts === 'function') {
+            try { 
+                console.log('[DEBUG] Using enhanceExistingProducts, list length before:', list.length);
+                const enhanced = enhanceExistingProducts(list);
+                console.log('[DEBUG] List enhanced, first product description:', enhanced[0]?.description?.substring(0, 50));
+                return enhanced;
+            } catch (e) { console.log('[DEBUG] enhanceExistingProducts error:', e.message); }
+        }
+
+        if (typeof getProductDescription === 'function') {
+            try {
+                console.log('[DEBUG] Using getProductDescription, list length:', list.length);
+                const result = list.map(prod => Object.assign({}, prod, { description: getProductDescription(prod.id, prod.category, prod.subcategory) }));
+                console.log('[DEBUG] Descriptions added, first:', result[0]?.description?.substring(0, 50));
+                return result;
+            } catch (e) { console.log('[DEBUG] getProductDescription error:', e.message); }
         }
 
         return list;
@@ -551,7 +573,13 @@
                 `;
                 
                 const btn = card.querySelector('.btn-add-cart');
-                btn.addEventListener('click', () => addToCart(p.id || p.title));
+                btn.addEventListener('click', (e) => { e.stopPropagation(); addToCart(p.id || p.title); });
+                
+                // Open product details modal on card click (for tablets and larger screens)
+                if (window.innerWidth >= 768) {
+                    card.addEventListener('click', () => openProductModal(p));
+                }
+                
                 productsGrid.appendChild(card);
             });
 
@@ -650,6 +678,7 @@
             products.slice(start, end).forEach(p => {
             const card = document.createElement('div');
             card.className = 'product-card';
+            card.style.cursor = 'pointer';
                 const title = (p.title && p.title[lang]) ? p.title[lang] : (p.title && p.title.ro) ? p.title.ro : (p.title || 'Produs');
                 const addText = (window.translations && window.translations[lang] && window.translations[lang].add_to_cart) || 'Adaugă în coș';
             const img = p.image || '';
@@ -674,7 +703,13 @@
             `;
             
             const btn = card.querySelector('.btn-add-cart');
-            btn.addEventListener('click', () => addToCart(p.id || p.title));
+            btn.addEventListener('click', (e) => { e.stopPropagation(); addToCart(p.id || p.title); });
+            
+            // Open product details modal on card click (for tablets and larger screens)
+            if (window.innerWidth >= 768) {
+                card.addEventListener('click', () => openProductModal(p));
+            }
+            
             productsGrid.appendChild(card);
         });
         
@@ -1032,3 +1067,114 @@
 
     document.addEventListener('DOMContentLoaded', init);
 })();
+
+// ========================================
+// PRODUCT MODAL FUNCTIONS (Global scope)
+// ========================================
+
+let currentModalProduct = null;
+let modalQty = 1;
+
+function openProductModal(product) {
+    if (!product) return;
+    
+    currentModalProduct = product;
+    modalQty = 1;
+    
+    // Get translated title and description
+    const lang = localStorage.getItem('intex_language') || 'ro';
+    const title = (product.title && product.title[lang]) ? product.title[lang] : 
+                  (product.title && product.title.ro) ? product.title.ro : 
+                  (product.title || 'Produs');
+    const desc = (product.description && (product.description[lang] || product.description.ro || product.description.en)) ? 
+                 (product.description[lang] || product.description.ro || product.description.en) : 'Fără descriere';
+    
+    // Set modal content
+    document.getElementById('modal-product-title').textContent = title;
+    document.getElementById('modal-product-image').src = product.image || '';
+    document.getElementById('modal-product-description').textContent = desc;
+    document.getElementById('modal-qty-display').textContent = 1;
+    
+    // Set price
+    const priceEl = document.getElementById('modal-product-price');
+    const oldPriceEl = document.getElementById('modal-product-old-price');
+    
+    if (product.oldPrice && product.oldPrice > product.price) {
+        oldPriceEl.textContent = (product.oldPrice.toFixed(2)) + ' LEI';
+        oldPriceEl.style.display = 'inline';
+        priceEl.textContent = (product.price.toFixed(2)) + ' LEI';
+    } else {
+        oldPriceEl.style.display = 'none';
+        priceEl.textContent = (product.price.toFixed(2)) + ' LEI';
+    }
+    
+    // Show modal
+    const modal = document.getElementById('product-modal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        document.body.classList.add('modal-open');
+    }
+}
+
+function closeProductModal() {
+    const modal = document.getElementById('product-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        document.body.classList.remove('modal-open');
+    }
+    currentModalProduct = null;
+    modalQty = 1;
+}
+
+// Modal quantity controls
+document.addEventListener('DOMContentLoaded', () => {
+    const qtyMinus = document.getElementById('modal-qty-minus');
+    const qtyPlus = document.getElementById('modal-qty-plus');
+    const qtyDisplay = document.getElementById('modal-qty-display');
+    const addToCartBtn = document.getElementById('modal-add-to-cart');
+    
+    if (qtyMinus) {
+        qtyMinus.addEventListener('click', () => {
+            if (modalQty > 1) {
+                modalQty--;
+                qtyDisplay.textContent = modalQty;
+            }
+        });
+    }
+    
+    if (qtyPlus) {
+        qtyPlus.addEventListener('click', () => {
+            modalQty++;
+            qtyDisplay.textContent = modalQty;
+        });
+    }
+    
+    if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', () => {
+            if (currentModalProduct) {
+                // Add product to cart with the selected quantity
+                const productId = currentModalProduct.id || currentModalProduct.title;
+                for (let i = 0; i < modalQty; i++) {
+                    window.addToCart ? window.addToCart(productId) : console.log('addToCart not available');
+                }
+                closeProductModal();
+            }
+        });
+    }
+    
+    // Close modal on overlay click
+    const modal = document.getElementById('product-modal');
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeProductModal();
+            }
+        });
+    }
+});
+
+// Expose functions globally
+window.openProductModal = openProductModal;
+window.closeProductModal = closeProductModal;

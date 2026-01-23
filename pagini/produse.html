@@ -250,6 +250,43 @@
         </div>
     </div>
 
+    <!-- PRODUCT DETAILS MODAL -->
+    <div id="product-modal" class="product-modal">
+        <div class="product-modal-content">
+            <span class="close-btn" onclick="closeProductModal()">&times;</span>
+            
+            <div class="product-modal-body">
+                <div class="product-modal-image">
+                    <img id="modal-product-image" src="" alt="Produs">
+                </div>
+                
+                <div class="product-modal-info">
+                    <h2 id="modal-product-title"></h2>
+                    
+                    <div class="product-modal-price">
+                        <span id="modal-product-old-price" class="old-price" style="display:none;"></span>
+                        <span id="modal-product-price" class="price-value"></span>
+                    </div>
+                    
+                    <p id="modal-product-description" class="product-modal-description"></p>
+                    
+                    <div class="product-modal-quantity">
+                        <label data-i18n="quantity_label">Cantitate:</label>
+                        <div class="qty-controls">
+                            <button class="qty-btn" id="modal-qty-minus">−</button>
+                            <span id="modal-qty-display" class="qty-display">1</span>
+                            <button class="qty-btn" id="modal-qty-plus">+</button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-main" id="modal-add-to-cart" style="width: 100%; padding: 15px; font-size: 1.1rem; margin-top: 20px;">
+                        <i class="fas fa-shopping-cart"></i> <span data-i18n="add_to_cart">Adaugă în coș</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../assets/js/data.js?v=1"></script>
     <script src="../assets/js/descrieri_produse.js"></script>
     <script src="../assets/js/theme.js"></script>

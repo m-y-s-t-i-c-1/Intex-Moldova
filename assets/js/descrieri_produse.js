@@ -1272,13 +1272,373 @@ const PRODUCT_DESCRIPTIONS = {
         ru: 'Ручной насос Double Quick Mini, 29см. Самый компактный ручной насос, легко переносится в сумке или рюкзаке. Для быстрого надувания мелких аксессуаров.',
         en: 'Manual pump Double Quick Mini 29cm. The most compact manual pump, easy to carry in bag or backpack. For quick inflation of small accessories.'
     },
+
+    // ==============================================
+    // BAZINE INTEX - POOLS PRODUCTS (CATEGORIA pools)
+    // ==============================================
+    
+    // Chimicale pentru Apă / Water Chemicals
+    'care_water': {
+        "ph-minus-5kg.jpg": {
+            ro: "PH Minus Granulat 5kg pentru reglarea nivelului de pH în piscine. Produs granulat de calitate profesională care reduce eficient pH-ul apei, prevenind formarea depunerilor calcaroase și protejând echipamentele piscinei. Asigură un echilibru chimic optim pentru o apă cristalină și confortabilă.",
+            ru: "PH Минус Гранулированный 5кг для регулирования уровня pH в бассейнах. Гранулированный продукт профессионального качества, эффективно снижающий pH воды, предотвращая образование известковых отложений и защищая оборудование бассейна. Обеспечивает оптимальный химический баланс для кристально чистой и комфортной воды.",
+            en: "PH Minus Granular 5kg for regulating pH levels in swimming pools. Professional quality granular product that effectively reduces water pH, preventing scale formation and protecting pool equipment. Ensures optimal chemical balance for crystal clear and comfortable water."
+        },
+        "alba-super-k.jpg": {
+            ro: "Alba Super K 1L - Algicid concentrat avansat pentru eliminarea și prevenirea algelor în bazine. Acționează rapid împotriva algelor verzi, negre și mustăților de baie. Formula cu acțiune persistente oferă protecție pe termen lung, menținând apa limpede și igienizată.",
+            ru: "Альба Супер K 1л - Продвинутый концентрированный альгицид для устранения и предотвращения водорослей в бассейнах. Быстро действует против зеленых, черных водорослей и слизи. Формула с пролонгированным действием обеспечивает долгосрочную защиту, сохраняя воду чистой и гигиеничной.",
+            en: "Alba Super K 1L - Advanced concentrated algicide for removing and preventing algae in pools. Acts quickly against green, black algae and pool slime. Long-lasting formula provides extended protection, keeping water clear and hygienic."
+        },
+        "all-in-one-tablets.jpg": {
+            ro: "Tablete All-in-One 20g/1kg pentru întreținerea completă a bazinelor. Combinație 3 în 1: clor pentru dezinfectare, algicid pentru prevenirea algelor și clarifiant pentru apă cristalină. Simplifică întreținerea piscinei cu un singur produs eficient.",
+            ru: "Таблетки All-in-One 20г/1кг для полного обслуживания бассейнов. Комбинация 3 в 1: хлор для дезинфекции, альгицид для предотвращения водорослей и осветлитель для кристально чистой воды. Упрощает обслуживание бассейна одним эффективным продуктом.",
+            en: "All-in-One Tablets 20g/1kg for complete pool maintenance. 3-in-1 combination: chlorine for disinfection, algicide for algae prevention and clarifier for crystal clear water. Simplifies pool maintenance with one efficient product."
+        },
+        "all-in-one-tablets-200g.jpg": {
+            ro: "All-in-one tablete multiple 200g/1kg pentru tratarea eficientă a apei bazinelor. Tablete cu acțiune lentă care eliberează progresiv substanțele active, asigurând o întreținere constantă pe o perioadă îndelungată. Perfecte pentru sezonul de înot.",
+            ru: "All-in-one мультитаблетки 200г/1кг для эффективной обработки воды бассейнов. Таблетки замедленного действия, постепенно высвобождающие активные вещества, обеспечивая постоянное обслуживание в течение длительного периода. Идеально подходят для купального сезона.",
+            en: "All-in-one multi tablets 200g/1kg for effective pool water treatment. Slow-release tablets that gradually release active substances, ensuring constant maintenance over an extended period. Perfect for the swimming season."
+        },
+        "kemochlor-tablets.jpg": {
+            ro: "Kemochlor T-tablete solubile rapid 20g/1kg pentru clorinare rapidă și eficientă. Tablete cu dizolvare accelerată care acționează imediat pentru eliminarea bacteriilor și algilor. Concentrație optimă pentru tratarea de șoc a bazinelor.",
+            ru: "Кемохлор Т-быстрорастворимые таблетки 20г/1кг для быстрого и эффективного хлорирования. Таблетки с ускоренным растворением, действующие немедленно для устранения бактерий и водорослей. Оптимальная концентрация для шоковой обработки бассейнов.",
+            en: "Kemochlor T-fast soluble tablets 20g/1kg for rapid and effective chlorination. Accelerated dissolution tablets that act immediately to eliminate bacteria and algae. Optimal concentration for pool shock treatment."
+        },
+        "filter-sand-25kg.jpg": {
+            ro: "Nisip Filtru 25kg de înaltă calitate pentru filtrele cu nisip ale bazinelor. Nisip special sortat și spălat, cu granulație optimă pentru filtrarea superioară. Reține particule fine până la 20-40 microni, menținând apa perfect limpede.",
+            ru: "Песок для фильтра 25кг высокого качества для песочных фильтров бассейнов. Специально отсортированный и промытый песок с оптимальной грануляцией для превосходной фильтрации. Задерживает мелкие частицы до 20-40 микрон, сохраняя воду идеально чистой.",
+            en: "Filter Sand 25kg high quality for pool sand filters. Specially sorted and washed sand with optimal granulation for superior filtration. Retains fine particles up to 20-40 microns, keeping water perfectly clear."
+        },
+        "tablet-tester.jpg": {
+            ro: "Tester tabletă 2 în 1 pentru măsurarea pH-ului și a clorului din apa bazinelor. Sistem simplu și precis cu pastile reactiv care oferă rezultate instant. Instrument esențial pentru monitorizarea calității apei și menținerea unui echilibru chimic optim.",
+            ru: "Тестер таблеточный 2 в 1 для измерения pH и хлора в воде бассейнов. Простая и точная система с реактивными таблетками, обеспечивающая мгновенные результаты. Важный инструмент для контроля качества воды и поддержания оптимального химического баланса.",
+            en: "Tablet tester 2 in 1 for measuring pH and chlorine in pool water. Simple and accurate system with reactive tablets providing instant results. Essential tool for monitoring water quality and maintaining optimal chemical balance."
+        }
+    },
+
+    // Piese INTEX / INTEX Parts
+    'intex_parts': {
+        "intex-liner-10090.jpg": {
+            ro: "10090 Cuvă Intex pentru bazin cadru Prism Frame 457x122cm. Cuvă de înlocuire originală Intex fabricată din PVC rezistent cu triplă protecție UV. Grosime de 0,56mm, complet etanșă, cu suprafață antiderapantă. Ușor de instalat, compatibilă cu toate modelele Prism Frame 457x122cm.",
+            ru: "10090 Чаша Intex для каркасного бассейна Prism Frame 457х122см. Оригинальная сменная чаша Intex из прочного ПВХ с тройной защитой от УФ. Толщина 0,56мм, полностью герметична, с противоскользящей поверхностью. Легко устанавливается, совместима со всеми моделями Prism Frame 457х122см.",
+            en: "10090 Intex Liner for Prism Frame pool 457x122cm. Original Intex replacement liner made of durable PVC with triple UV protection. 0.56mm thickness, completely waterproof, with anti-slip surface. Easy to install, compatible with all Prism Frame 457x122cm models."
+        },
+        "rubber-plug.jpg": {
+            ro: "10127 Dop de cauciuc pentru bazine Intex. Dop original pentru etanșarea orificiilor de scurgere și conectare. Material cauciuc de înaltă calitate, rezistent la îmbătrânire și intemperii. Diametru compatibil cu majoritatea modelelor Intex.",
+            ru: "10127 Резиновая заглушка для бассейнов Intex. Оригинальная заглушка для герметизации сливных и соединительных отверстий. Материал - высококачественная резина, устойчивая к старению и погодным условиям. Диаметр совместим с большинством моделей Intex.",
+            en: "10127 Rubber plug for Intex pools. Original plug for sealing drain and connection holes. High-quality rubber material, resistant to aging and weather conditions. Diameter compatible with most Intex models."
+        },
+        "drain-valve-adapter.jpg": {
+            ro: "10201 Adaptor pentru valve de drenaj Intex. Piesă de conectare pentru sistemele de scurgere ale bazinelor. Asigură o etanșeitate perfectă și permite evacuarea controlată a apei. Compatibil cu găurile standard de 38mm.",
+            ru: "10201 Переходник для сливного клапана Intex. Соединительная деталь для дренажных систем бассейнов. Обеспечивает идеальную герметичность и позволяет контролируемый слив воды. Совместим со стандартными отверстиями 38мм.",
+            en: "10201 Adapter for Intex drain valves. Connection part for pool drainage systems. Provides perfect sealing and allows controlled water drainage. Compatible with standard 38mm holes."
+        },
+        "connector-nut.jpg": {
+            ro: "10256 Piuliță pentru connector 38 mm Intex. Piesă de fixare pentru sistemele de filtrare și conectare. Oțel inoxidabil acoperit, rezistent la coroziune. Asigură o strângere uniformă și previne scurgerile.",
+            ru: "10256 Гайка для соединителя 38 мм Intex. Крепежная деталь для систем фильтрации и соединения. Нержавеющая сталь с покрытием, устойчивая к коррозии. Обеспечивает равномерную затяжку и предотвращает утечки.",
+            en: "10256 Nut for 38mm Intex connector. Fastening part for filtration and connection systems. Coated stainless steel, corrosion resistant. Provides even tightening and prevents leaks."
+        },
+        "sealing-ring.jpg": {
+            ro: "10262 Inel de etanșare Intex pentru sistemele de conectare. Inel din cauciuc sintetic de înaltă calitate, rezistent la deformări și intemperii. Asigură etanșeitate perfectă la conexiunile sistemului de filtrare.",
+            ru: "10262 Уплотнительное кольцо Intex для соединительных систем. Кольцо из высококачественного синтетического каучука, устойчивое к деформациям и погодным условиям. Обеспечивает идеальную герметичность в соединениях системы фильтрации.",
+            en: "10262 Intex sealing ring for connection systems. Ring made of high-quality synthetic rubber, resistant to deformation and weather conditions. Ensures perfect sealing in filtration system connections."
+        },
+        "connecting-post.jpg": {
+            ro: "10383 Stâlp de conectare Intex pentru bazine cadru. Element structural care asigură rigiditatea și stabilitatea cadrului. Oțel galvanizat, rezistent la rugină. Ușor de montat, compatibil cu sistemele Ultra Frame și Prism Frame.",
+            ru: "10383 Соединительная стойка Intex для каркасных бассейнов. Структурный элемент, обеспечивающий жесткость и стабильность каркаса. Оцинкованная сталь, устойчивая к ржавчине. Легко монтируется, совместима с системами Ultra Frame и Prism Frame.",
+            en: "10383 Intex connecting post for frame pools. Structural element providing rigidity and stability to the frame. Galvanized steel, rust resistant. Easy to install, compatible with Ultra Frame and Prism Frame systems."
+        },
+        "horizontal-beam-a.jpg": {
+            ro: "10919 Grindă orizontală (A) Intex pentru Ultra Frame 549x274x132cm. Element de susținere principal pentru bazinele mari Ultra Frame. Oțel cu tratament anticoroziv, capacitate de încărcare ridicată. Asigură distribuția uniformă a sarcinii.",
+            ru: "10919 Горизонтальная балка (A) Intex для Ultra Frame 549х274х132см. Основной опорный элемент для больших бассейнов Ultra Frame. Сталь с антикоррозийной обработкой, высокая грузоподъемность. Обеспечивает равномерное распределение нагрузки.",
+            en: "10919 Horizontal beam (A) for Intex Ultra Frame 549x274x132cm. Main support element for large Ultra Frame pools. Corrosion-treated steel, high load capacity. Ensures even load distribution."
+        },
+        "horizontal-beam-b.jpg": {
+            ro: "10922 Grindă orizontală (B) Intex pentru sistemele Ultra Frame. Componentă esențială pentru integritatea structurală a bazinelor mari. Proiectată pentru rezistență maximă și durabilitate pe termen lung.",
+            ru: "10922 Горизонтальная балка (B) Intex для систем Ultra Frame. Важный компонент для структурной целостности больших бассейнов. Разработана для максимальной прочности и долговечности.",
+            en: "10922 Horizontal beam (B) for Intex Ultra Frame systems. Essential component for structural integrity of large pools. Designed for maximum strength and long-term durability."
+        },
+        "horizontal-beam-c.jpg": {
+            ro: "10925 Grindă orizontală (C) Intex pentru sistemele de cadru premium. Element de rigidizare care mărește stabilitatea laterală a bazinului. Material: oțel cu vopsire în pudră pentru protecție maximă.",
+            ru: "10925 Горизонтальная балка (C) Intex для премиальных каркасных систем. Элемент жесткости, увеличивающий боковую устойчивость бассейна. Материал: сталь с порошковым покрытием для максимальной защиты.",
+            en: "10925 Horizontal beam (C) for Intex premium frame systems. Stiffening element that increases lateral stability of the pool. Material: powder-coated steel for maximum protection."
+        },
+        "horizontal-beam-d.jpg": {
+            ro: "10928 Grindă orizontală (D) Intex pentru configurații complexe de bazine. Piesă specializată pentru colțuri și zone cu solicitări ridicate. Proiectare optimizată pentru rezistență la oboseală.",
+            ru: "10928 Горизонтальная балка (D) Intex для сложных конфигураций бассейнов. Специализированная деталь для углов и зон с высокой нагрузкой. Оптимизированная конструкция для устойчивости к усталости.",
+            en: "10928 Horizontal beam (D) for complex pool configurations. Specialized part for corners and high-stress areas. Optimized design for fatigue resistance."
+        },
+        "horizontal-beam-f.jpg": {
+            ro: "10932 Grindă orizontală (F) Intex pentru sistemele Ultra XTR. Componentă premium pentru bazinele cu înălțime mare de cadru. Rezistență sporită la sarcini dinamice și vânt.",
+            ru: "10932 Горизонтальная балка (F) Intex для систем Ultra XTR. Премиум компонент для бассейнов с высокой каркасной конструкцией. Повышенная устойчивость к динамическим нагрузкам и ветру.",
+            en: "10932 Horizontal beam (F) for Intex Ultra XTR systems. Premium component for pools with tall frame structures. Enhanced resistance to dynamic loads and wind."
+        },
+        "corner-connection.jpg": {
+            ro: "10934 Conexiune de colț Intex pentru asamblarea cadrelor de bazin. Sistem de blocare rapidă care asigură unghiuri precise și stabile. Material plastic de înaltă rezistență cu inserții metalice.",
+            ru: "10934 Угловое соединение Intex для сборки каркасов бассейнов. Система быстрой блокировки, обеспечивающая точные и стабильные углы. Материал: высокопрочный пластик с металлическими вставками.",
+            en: "10934 Intex corner connection for pool frame assembly. Quick-lock system ensuring precise and stable angles. Material: high-strength plastic with metal inserts."
+        },
+        "u-support-beam.jpg": {
+            ro: "10937 Grindă de susținere în formă de U Intex pentru bazine grele. Element portant special pentru bazinele cu volum mare de apă. Oțel structural cu protecție anticorozivă completă.",
+            ru: "10937 Опорная U-образная балка Intex для тяжелых бассейнов. Специальный несущий элемент для бассейнов с большим объемом воды. Конструкционная сталь с полной антикоррозийной защитой.",
+            en: "10937 U-shaped support beam for heavy Intex pools. Special load-bearing element for pools with large water volume. Structural steel with complete anti-corrosion protection."
+        },
+        "intex-10938.jpg": {
+            ro: "10938 Componentă Intex pentru sisteme de fixare și conectare. Piesă universală utilizată în mai multe modele de bazine cadru. Rezistență la uzură și condiții meteorologice variate.",
+            ru: "10938 Компонент Intex для систем крепления и соединения. Универсальная деталь, используемая в нескольких моделях каркасных бассейнов. Устойчивость к износу и различным погодным условиям.",
+            en: "10938 Intex component for fastening and connection systems. Universal part used in multiple frame pool models. Resistance to wear and varied weather conditions."
+        },
+        "intex-liner-10939.jpg": {
+            ro: "10939 Cuvă Intex pentru bazin cadru 549x274x132cm. Cuvă premium cu grosime sporită (0,65mm) pentru durabilitate maximă. Design cu triple protecție UV, rezistentă la fisuri și decolorare.",
+            ru: "10939 Чаша Intex для каркасного бассейна 549x274x132см. Премиум чаша с увеличенной толщиной (0,65мм) для максимальной долговечности. Дизайн с тройной защитой от УФ, устойчивая к трещинам и выцветанию.",
+            en: "10939 Intex liner for frame pool 549x274x132cm. Premium liner with increased thickness (0.65mm) for maximum durability. Design with triple UV protection, resistant to cracks and fading."
+        },
+        "inlet-nozzle-d32.jpg": {
+            ro: "11070 Duză de intrare D-32 Intex pentru sistemele de recirculare a apei. Distribuie apa filtrată uniform în bazin, prevenind zone moarte. Material ABS rezistent la clor și UV.",
+            ru: "11070 Входная форсунка D-32 Intex для систем рециркуляции воды. Равномерно распределяет фильтрованную воду в бассейне, предотвращая мертвые зоны. Материал АБС, устойчивый к хлору и УФ.",
+            en: "11070 Inlet nozzle D-32 for Intex water recirculation systems. Evenly distributes filtered water in the pool, preventing dead spots. ABS material resistant to chlorine and UV."
+        },
+        "plastic-insert.jpg": {
+            ro: "11157 Insert plastic pentru grinzi Intex. Componentă care asigură fixarea sigură a grinzilor în conectoare. Plastic de inginerie cu rezistență la impact și deformare.",
+            ru: "11157 Пластиковая вставка для балок Intex. Компонент, обеспечивающий надежное крепление балок в соединителях. Инженерный пластик с устойчивостью к ударам и деформации.",
+            en: "11157 Plastic insert for Intex beams. Component ensuring secure beam attachment in connectors. Engineering plastic with impact and deformation resistance."
+        },
+        "sealing-ring-11228.jpg": {
+            ro: "11228 Inel de etanșare Intex pentru sistemele hidraulice. Inel de cauciuc nitrilic pentru presiuni ridicate. Menține etanșeitatea perfectă la conexiunile cu pompă și filtru.",
+            ru: "11228 Уплотнительное кольцо Intex для гидравлических систем. Кольцо из нитрильного каучука для высокого давления. Поддерживает идеальную герметичность в соединениях с насосом и фильтром.",
+            en: "11228 Intex sealing ring for hydraulic systems. Nitrile rubber ring for high pressures. Maintains perfect sealing in pump and filter connections."
+        },
+        "titanium-electrode.jpg": {
+            ro: "11374 Electrod din titan 26666 pentru generatoarele de clor Intex. Componentă esențială pentru sistemele de sărare, cu durată de viață extinsă. Titan pur pentru eficiență maximă și durabilitate.",
+            ru: "11374 Титановый электрод 26666 для хлорогенераторов Intex. Важный компонент для систем соленой воды, с увеличенным сроком службы. Чистый титан для максимальной эффективности и долговечности.",
+            en: "11374 Titanium electrode 26666 for Intex chlorine generators. Essential component for saltwater systems, with extended lifespan. Pure titanium for maximum efficiency and durability."
+        },
+        "l-sealing-ring.jpg": {
+            ro: "11412 Inel de etanșare în formă de L Intex pentru conexiuni complexe. Design special pentru colțuri și racorduri cu unghiuri. Rezistent la temperaturi extreme și presiune hidrostatică.",
+            ru: "11412 L-образное уплотнительное кольцо Intex для сложных соединений. Специальный дизайн для углов и фитингов под углом. Устойчиво к экстремальным температурам и гидростатическому давлению.",
+            en: "11412 L-shaped sealing ring for complex Intex connections. Special design for corners and angled fittings. Resistant to extreme temperatures and hydrostatic pressure."
+        },
+        "outlet-nozzle-d32.jpg": {
+            ro: "12365 Duză de ieșire D-32 Intex pentru evacuarea apei către filtru. Optimizează debitul apei spre sistemul de filtrare. Design hidrodinamic care minimizează pierderile de presiune.",
+            ru: "12365 Выходная форсунка D-32 Intex для отвода воды к фильру. Оптимизирует поток воды к системе фильтрации. Гидродинамический дизайн, минимизирующий потери давления.",
+            en: "12365 Outlet nozzle D-32 for water evacuation to filter. Optimizes water flow to filtration system. Hydrodynamic design minimizing pressure losses."
+        },
+        "ultra-frame-liner-12436.jpg": {
+            ro: "12436 Cuvă Ultra Frame Intex 549x132cm pentru bazinele cu pereți înalți. Material PVC cu patru straturi de protecție UV. Suprafață antialunecare, design interior atractiv cu efect optic 3D.",
+            ru: "12436 Чаша Ultra Frame Intex 549х132см для бассейнов с высокими стенками. Материал ПВХ с четырьмя слоями защиты от УФ. Противоскользящая поверхность, привлекательный внутренний дизайн с 3D эффектом.",
+            en: "12436 Ultra Frame liner 549x132cm for pools with tall walls. PVC material with four layers of UV protection. Anti-slip surface, attractive interior design with 3D optical effect."
+        },
+        "support-cap.jpg": {
+            ro: "12465 Cap de oprire pentru sistemele Prism Frame Intex. Protejează capetele stâlpilor și previne deteriorarea podelei. Plastic termorezistent cu inserturi din cauciuc moale.",
+            ru: "12465 Защитный колпачок для систем Prism Frame Intex. Защищает концы стоек и предотвращает повреждение пола. Термостойкий пластик с вставками из мягкой резины.",
+            en: "12465 Support cap for Intex Prism Frame systems. Protects post ends and prevents floor damage. Heat-resistant plastic with soft rubber inserts."
+        },
+        "t-connector.jpg": {
+            ro: "12802 Conector în formă de T pentru sistemele Prism Frame. Permite ramificarea sistemelor de susținere și conectarea elementelor auxiliare. Sistem de blocare cu clic pentru montaj rapid.",
+            ru: "12802 Т-образный соединитель для систем Prism Frame. Позволяет разветвление систем поддержки и подключение вспомогательных элементов. Система блокировки с щелчком для быстрого монтажа.",
+            en: "12802 T-connector for Prism Frame systems. Allows branching of support systems and connection of auxiliary elements. Click-lock system for quick assembly."
+        },
+        "horizontal-beam-12808.jpg": {
+            ro: "12808 Grindă orizontală Intex pentru sistemele Prism Frame îmbunătățite. Element cu rezistență sporită la încovoiere și torsiune. Tratament anticoroziv pentru medii cu umiditate ridicată.",
+            ru: "12808 Горизонтальная балка Intex для усовершенствованных систем Prism Frame. Элемент с повышенной устойчивостью к изгибу и кручению. Антикоррозийная обработка для сред с высокой влажностью.",
+            en: "12808 Horizontal beam for enhanced Prism Frame systems. Element with increased resistance to bending and torsion. Anti-corrosion treatment for high humidity environments."
+        },
+        "vertical-beam.jpg": {
+            ro: "12818 Grindă verticală Intex pentru susținerea pereților bazinului. Transferă sarcina apei la sol, distribuind uniform presiunea. Oțel cu profil special pentru rigiditate optimă.",
+            ru: "12818 Вертикальная балка Intex для поддержки стенок бассейна. Передает нагрузку воды на грунт, равномерно распределяя давление. Сталь со специальным профилем для оптимальной жесткости.",
+            en: "12818 Vertical beam for supporting pool walls. Transfers water load to ground, evenly distributing pressure. Steel with special profile for optimal rigidity."
+        },
+        "vacuum-brushes.jpg": {
+            ro: "12928 Set de perii pentru robotul aspirator Intex 28005. Perii de înlocuire din material moale care nu zgârie suprafața bazinului. Design optimizat pentru curățarea eficientă a colțurilor și margini.",
+            ru: "12928 Набор щеток для робота-пылесоса Intex 28005. Сменные щетки из мягкого материала, не царапающего поверхность бассейна. Оптимизированный дизайн для эффективной очистки углов и краев.",
+            en: "12928 Brush set for Intex 28005 robot vacuum. Replacement brushes made of soft material that doesn't scratch pool surface. Optimized design for efficient cleaning of corners and edges."
+        },
+        "chlorine-generator.jpg": {
+            ro: "26670 Generator de clor Krystal Clear Saltwater System Intex. Sistem automat care transformă sarea în clor natural. Ecologic, reduce necesitatea chimicalelor. Pentru bazine până la 60.000 de litri.",
+            ru: "26670 Хлорогенератор Krystal Clear Saltwater System Intex. Автоматическая система, превращающая соль в натуральный хлор. Экологичный, уменьшает потребность в химикатах. Для бассейнов до 60 000 литров.",
+            en: "26670 Chlorine generator Krystal Clear Saltwater System Intex. Automatic system converting salt to natural chlorine. Ecological, reduces need for chemicals. For pools up to 60,000 liters."
+        },
+        "intex-26726.jpg": {
+            ro: "26726 Carcasă Intex pentru componente electrice ale sistemelor de filtrare. Protectie IPX4 împotriva stropilor și umidității. Design ergonomic pentru acces ușor la componentele interne.",
+            ru: "26726 Корпус Intex для электрических компонентов систем фильтрации. Защита IPX4 от брызг и влаги. Эргономичный дизайн для легкого доступа к внутренним компонентам.",
+            en: "26726 Intex housing for electrical components of filtration systems. IPX4 protection against splashes and moisture. Ergonomic design for easy access to internal components."
+        },
+        "connecting-hose-32mm.jpg": {
+            ro: "29059 Furtun de conectare 32mm pentru sistemele de filtrare Intex. Furtun flexibil, rezistent la presiune și clor. Conexiuni rapide pentru instalare simplă. Lungime standard pentru majoritatea configurațiilor.",
+            ru: "29059 Соединительный шланг 32мм для систем фильтрации Intex. Гибкий шланг, устойчивый к давлению и хлору. Быстросъемные соединения для простой установки. Стандартная длина для большинства конфигураций.",
+            en: "29059 Connecting hose 32mm for Intex filtration systems. Flexible hose, resistant to pressure and chlorine. Quick-connect fittings for easy installation. Standard length for most configurations."
+        },
+        "adapter-set-b.jpg": {
+            ro: "29061 Set adaptoare B pentru conexiuni multiple între componentele sistemului de filtrare. Include adaptoare pentru diferite diametre de țevi. Material plastic de calitate alimentară.",
+            ru: "29061 Комплект переходников B для множественных соединений между компонентами системы фильтрации. Включает переходники для разных диаметров труб. Материал: пищевой пластик.",
+            en: "29061 Adapter set B for multiple connections between filtration system components. Includes adapters for different pipe diameters. Food-grade plastic material."
+        },
+        "metal-frame-liner-10095.jpg": {
+            ro: "10095 Cuvă Metal Frame Intex 305x76cm pentru bazine cu cadru metalic. Cuvă din PVC 3-straturi cu protecție UV. Grosime 0,44mm, perfectă pentru înlocuirea cuvelor uzate sau deteriorate.",
+            ru: "10095 Чаша Metal Frame Intex 305х76см для бассейнов с металлическим каркасом. Чаша из 3-слойного ПВХ с защитой от УФ. Толщина 0,44мм, идеально подходит для замены изношенных или поврежденных чаш.",
+            en: "10095 Metal Frame liner 305x76cm for metal frame pools. 3-layer PVC liner with UV protection. 0.44mm thickness, perfect for replacing worn or damaged liners."
+        },
+        "metal-frame-liner-10096.jpg": {
+            ro: "Cuvă Metal Frame 366x76cm - Înlocuitor durabil pentru modelele Intex populare. Material îmbunătățit cu rezistență sporită la tracțiune și perforare. Design interior modern cu model decorativ.",
+            ru: "Чаша Metal Frame 366х76см - Долговечная замена для популярных моделей Intex. Улучшенный материал с повышенной устойчивостью к растяжению и проколам. Современный внутренний дизайн с декоративным узором.",
+            en: "Metal Frame liner 366x76cm - Durable replacement for popular Intex models. Improved material with increased resistance to stretching and punctures. Modern interior design with decorative pattern."
+        },
+        "easy-set-liner-10318.jpg": {
+            ro: "10318/12129 Cuvă Easy Set Intex 305x76 cm pentru bazinele gonflabile. Cuvă circulară cu design simplu pentru înlocuire rapidă. Material PVC cu dublă protecție UV, rezistent la decolorare.",
+            ru: "10318/12129 Чаша Easy Set Intex 305×76 см для надувных бассейнов. Круглая чаша с простым дизайном для быстрой замены. Материал ПВХ с двойной защитой от УФ, устойчивый к выцветанию.",
+            en: "10318/12129 Easy Set liner 305x76 cm for inflatable pools. Circular liner with simple design for quick replacement. PVC material with double UV protection, resistant to fading."
+        },
+        "easy-set-liner-11588.jpg": {
+            ro: "11588 Cuvă Intex 183x51cm pentru bazinele Easy Set mici. Perfectă pentru bazinele copiilor sau spațiile mici. Material PVC flexibil, ușor de curățat și întreținut.",
+            ru: "11588 Чаша Intex 183×51см для небольших бассейнов Easy Set. Идеально подходит для детских бассейнов или небольших пространств. Гибкий материал ПВХ, легко чистится и обслуживается.",
+            en: "11588 Intex liner 183x51cm for small Easy Set pools. Perfect for children's pools or small spaces. Flexible PVC material, easy to clean and maintain."
+        },
+        "liner-12135a.jpg": {
+            ro: "12135A Cuvă Intex 400x200x100cm pentru bazine rectangulare mari. Cuvă de înlocuire pentru modelele Prism Frame rectangulare. Material premium cu triplă protecție și suprafață antiderapantă.",
+            ru: "12135A Чаша Intex 400х200х100см для больших прямоугольных бассейнов. Сменная чаша для прямоугольных моделей Prism Frame. Премиум материал с тройной защитой и противоскользящей поверхностью.",
+            en: "12135A Intex liner 400x200x100cm for large rectangular pools. Replacement liner for rectangular Prism Frame models. Premium material with triple protection and anti-slip surface."
+        },
+        "liner-12228.jpg": {
+            ro: "12228 Cuvă Intex 488x244x107cm pentru bazine olimpice de dimensiuni medii. Cuvă cu design special pentru antrenamente și recreere. Material gros, rezistent la stres mecanic ridicat.",
+            ru: "12228 Чаша Intex 488х244х107см для бассейнов средних олимпийских размеров. Чаша со специальным дизайном для тренировок и отдыха. Толстый материал, устойчивый к высоким механическим нагрузкам.",
+            en: "12228 Intex liner 488x244x107cm for medium Olympic-sized pools. Liner with special design for training and recreation. Thick material, resistant to high mechanical stress."
+        },
+        "nozzle-d38.jpg": {
+            ro: "INTEX 12354 duză D-38 pentru sistemele de filtrare cu debit mare. Pentru bazine peste 40.000 litri, asigură distribuția optimă a apei. Material ABS îmbunătățit cu rezistență chimică sporită.",
+            ru: "INTEX 12354 форсунка D-38 для систем фильтрации с высоким расходом. Для бассейнов более 40 000 литров, обеспечивает оптимальное распределение воды. Улучшенный материал АБС с повышенной химической стойкостью.",
+            en: "INTEX 12354 nozzle D-38 for high-flow filtration systems. For pools over 40,000 liters, ensures optimal water distribution. Improved ABS material with enhanced chemical resistance."
+        },
+        "prism-frame-liner-12533.jpg": {
+            ro: "12533 Cuvă Prism Frame Intex 366x99cm cu design modern și culori vii. Material cu patru straturi, rezistent la zgârieturi și uzură. Perfectă pentru înlocuirea cuvelor vechi cu un aspect nou.",
+            ru: "12533 Чаша Prism Frame Intex 366х99см с современным дизайном и яркими цветами. Материал с четырьмя слоями, устойчивый к царапинам и износу. Идеально подходит для замены старых чаш на новый вид.",
+            en: "12533 Prism Frame liner 366x99cm with modern design and bright colors. Four-layer material, resistant to scratches and wear. Perfect for replacing old liners with a new look."
+        }
+    },
+
+    // Bazine Cadru / Frame Pools
+    'frame_pools': {
+        "ultra-frame-26326.jpg": {
+            ro: "26326 Bazin cadru Ultra Frame Intex 488x122cm. Bazin premium cu sistem de cadru Ultra Frame pentru stabilitate excepțională. Material PVC cu triplă protecție UV, capacitate 13.994 litri. Include filtru-pompă Krystal Clear 2.006L/h și scară.",
+            ru: "26326 Каркасный бассейн Ultra Frame Intex 488x122см. Премиум бассейн с системой каркаса Ultra Frame для исключительной стабильности. Материал ПВХ с тройной защитой от УФ, вместимость 13 994 литра. Включает фильтр-насос Krystal Clear 2.006л/ч и лестницу.",
+            en: "26326 Ultra Frame pool Intex 488x122cm. Premium pool with Ultra Frame system for exceptional stability. PVC material with triple UV protection, capacity 13,994 liters. Includes Krystal Clear filter-pump 2,006L/h and ladder."
+        },
+        "ultra-frame-26330.jpg": {
+            ro: "26330 Bazin cadru Ultra Frame Intex 549x132cm. Bazin mare pentru familie, cu design robust și sistem de susținere îmbunătățit. Capacitate 24.311 litri, adâncime 132cm. Perfect pentru divertisment și relaxare.",
+            ru: "26330 Каркасный бассейн Ultra Frame Intex 549x132см. Большой семейный бассейн с прочным дизайном и улучшенной системой поддержки. Вместимость 24 311 литров, глубина 132см. Идеально подходит для развлечений и отдыха.",
+            en: "26330 Ultra Frame pool Intex 549x132cm. Large family pool with robust design and improved support system. Capacity 24,311 liters, depth 132cm. Perfect for entertainment and relaxation."
+        },
+        "ultra-xtr-26340.jpg": {
+            ro: "26340 Bazin cadru Ultra XTR Frame Intex 732x132cm. Bazin de dimensiuni generoase cu sistem XTR pentru rezistență maximă. Cadru din oțel galvanizat cu protecție împotriva ruginii. Capacitate 43.700 litri.",
+            ru: "26340 Каркасный бассейн Ultra XTR Frame Intex 732x132см. Бассейн щедрых размеров с системой XTR для максимальной прочности. Каркас из оцинкованной стали с защитой от ржавчины. Вместимость 43 700 литров.",
+            en: "26340 Ultra XTR Frame pool Intex 732x132cm. Generously sized pool with XTR system for maximum strength. Galvanized steel frame with rust protection. Capacity 43,700 liters."
+        },
+        "ultra-xtr-26356.jpg": {
+            ro: "26356 Bazin cadru Ultra XTR Premium Pool Line 549x274x132cm. Bazin oval premium cu design elegant și funcționalități avansate. Sistem de filtrare performant și accesorii incluse pentru experiență completă.",
+            ru: "26356 Каркасный бассейн Ultra XTR Premium Pool Line 549х274х132см. Премиум овальный бассейн с элегантным дизайном и передовыми функциями. Производительная система фильтрации и включенные аксессуары для полного опыта.",
+            en: "26356 Ultra XTR Premium Pool Line 549x274x132cm. Premium oval pool with elegant design and advanced features. High-performance filtration system and included accessories for complete experience."
+        },
+        "ultra-xtr-26364.jpg": {
+            ro: "26364 Bazin cadru Ultra XTR Premium Pool Line 732x366x132cm. Bazin oval mare, perfect pentru petreceri și evenimente în familie. Structură ultra-rezistentă, adâncime uniformă de 132cm pe toată suprafața.",
+            ru: "26364 Каркасный бассейн Ultra XTR Premium Pool Line 732x366x132см. Большой овальный бассейн, идеально подходящий для вечеринок и семейных мероприятий. Ультрапрочная структура, равномерная глубина 132см по всей поверхности.",
+            en: "26364 Ultra XTR Premium Pool Line 732x366x132cm. Large oval pool, perfect for parties and family events. Ultra-resistant structure, uniform 132cm depth across entire surface."
+        },
+        "ultra-xtr-26374.jpg": {
+            ro: "26374 Bazin cadru Ultra XTR Premium Pool Line 975x488x132cm. Bazin de dimensiuni profesionale pentru proprietăți mari și utilizare intensivă. Cel mai mare model din gama Intex, cu toate funcționalitățile premium.",
+            ru: "26374 Каркасный бассейн Ultra XTR Premium Pool Line 975х488х132см. Бассейн профессиональных размеров для больших владений и интенсивного использования. Самая большая модель в линейке Intex со всеми премиум функциями.",
+            en: "26374 Ultra XTR Premium Pool Line 975x488x132cm. Professional size pool for large properties and intensive use. Largest model in Intex lineup with all premium features."
+        },
+        "frame-pool-26700.jpg": {
+            ro: "26700 Bazin cadru Intex 305x76cm. Bazin accesibil pentru familii cu spațiu limitat. Ușor de asamblat, cu cadru simplu și eficient. Perfect pentru copii și adulți pentru răcoare în zilele calde.",
+            ru: "26700 Каркасный бассейн Intex 305x76см. Доступный бассейн для семей с ограниченным пространством. Легко собирается, с простой и эффективной рамой. Идеально подходит для детей и взрослых, чтобы охладиться в жаркие дни.",
+            en: "26700 Frame pool Intex 305x76cm. Affordable pool for families with limited space. Easy to assemble, with simple and efficient frame. Perfect for children and adults to cool off on hot days."
+        },
+        "frame-pool-26702.jpg": {
+            ro: "26702 Bazin cadru Intex 305x76cm cu filtru-pompă inclus. Set complet care include tot ce este necesar pentru a începe. Capacitate 4.485 litri, ideal pentru 4-5 persoane.",
+            ru: "26702 Каркасный бассейн Intex 305х76см с включенным фильтр-насосом. Полный комплект, включающий все необходимое для начала. Вместимость 4 485 литров, идеально для 4-5 человек.",
+            en: "26702 Frame pool Intex 305x76cm with included filter-pump. Complete set including everything needed to get started. Capacity 4,485 liters, ideal for 4-5 people."
+        },
+        "prism-frame-26710.jpg": {
+            ro: "26710 Bazin cadru Intex Prism Frame 366x76cm. Design Prism Frame cu elemente decorative atrăgătoare și culori vii. Material cu protecție UV îmbunătățită, rezistent la decolorare.",
+            ru: "26710 Каркасный бассейн Intex Prism Frame 366х76см. Дизайн Prism Frame с привлекательными декоративными элементами и яркими цветами. Материал с улучшенной защитой от УФ, устойчивый к выцветанию.",
+            en: "26710 Prism Frame pool Intex 366x76cm. Prism Frame design with attractive decorative elements and bright colors. Material with enhanced UV protection, resistant to fading."
+        },
+        "prism-frame-26712.jpg": {
+            ro: "26712 Bazin cadru Prism Frame 366x76cm cu filtru-pompă 2006l/h. Set complet cu sistem de filtrare Krystal Clear. Capacitate 6.503 litri, adâncime 76cm. Perfect pentru utilizare recreativă zilnică.",
+            ru: "26712 Каркасный бассейн Prism Frame 366х76см с фильтр-насосом 2006л/ч. Полный комплект с системой фильтрации Krystal Clear. Вместимость 6 503 литра, глубина 76см. Идеально для ежедневного рекреационного использования.",
+            en: "26712 Prism Frame pool 366x76cm with filter-pump 2006l/h. Complete set with Krystal Clear filtration system. Capacity 6,503 liters, depth 76cm. Perfect for daily recreational use."
+        }
+    },
+
+    // Bazine Gonflabile / Easy Set Pools
+    'easy_set': {
+        "easy-set-28101.jpg": {
+            ro: "28101 Bazin Easy Set Intex 183x51cm - Piscină compactă pentru copii. Bazin gonflabil cu inel superior gonflat pentru susținere. Ușor de instalat în 10 minute, necesită doar o sursă de apă. Material PVC cu dublă protecție UV.",
+            ru: "28101 Бассейн Easy Set Intex 183x51см - Компактный бассейн для детей. Надувной бассейн с надувным верхним кольцом для поддержки. Легко устанавливается за 10 минут, требуется только источник воды. Материал ПВХ с двойной защитой от УФ.",
+            en: "28101 Easy Set pool Intex 183x51cm - Compact kids pool. Inflatable pool with inflated top ring for support. Easy to install in 10 minutes, requires only water source. PVC material with double UV protection."
+        },
+        "easy-set-28106.jpg": {
+            ro: "28106 Bazin Easy Set Intex 244x61cm - Piscină familială. Dimensiuni perfecte pentru familii cu copii. Capacitate 2.271 litri, adâncime 61cm. Setup rapid, doar umpleți cu apă și gata.",
+            ru: "28106 Бассейн Easy Set Intex 244x61см - Семейный бассейн. Идеальные размеры для семей с детьми. Вместимость 2 271 литр, глубина 61см. Быстрая установка, просто наполните водой и готово.",
+            en: "28106 Easy Set pool Intex 244x61cm - Family pool. Perfect dimensions for families with children. Capacity 2,271 liters, depth 61cm. Quick setup, just fill with water and ready."
+        },
+        "easy-set-28120.jpg": {
+            ro: "28120 Bazin Easy Set Intex 305x76cm - Piscină mare pentru familie. Cel mai mare model din seria Easy Set, perfect pentru 6-8 persoane. Material PVC gros de 0,30mm pentru durabilitate sporită.",
+            ru: "28120 Бассейн Easy Set Intex 305x76см - Большой семейный бассейн. Самая большая модель в серии Easy Set, идеально подходит для 6-8 человек. Материал ПВХ толщиной 0,30мм для увеличенной долговечности.",
+            en: "28120 Easy Set pool Intex 305x76cm - Large family pool. Largest model in Easy Set series, perfect for 6-8 people. 0.30mm thick PVC material for enhanced durability."
+        },
+        "repair-kit.jpg": {
+            ro: "59631 Kit de reparații universal pentru bazine gonflabile. Include toate materialele necesare pentru repararea rapidă a oricărui bazin gonflabil. Patch-uri autoadezive și kit de lipire profesional.",
+            ru: "59631 Универсальный ремонтный комплект для надувных бассейнов. Включает все необходимые материалы для быстрого ремонта любого надувного бассейна. Самоклеящиеся заплатки и профессиональный набор для склеивания.",
+            en: "59631 Universal repair kit for inflatable pools. Includes all materials needed for quick repair of any inflatable pool. Self-adhesive patches and professional glue kit."
+        }
+    },
+
+    // Filtre și Pompe / Filters & Pumps
+    'filters': {
+        "filter-pump-26604.jpg": {
+            ro: "26604 Filtru-Pompă Krystal Clear 2006L/h pentru bazine mici. Sistem complet de filtrare cu cartuș pentru bazine până la 4.500 litri. Ușor de instalat și întreținut, purifică eficient apa.",
+            ru: "26604 Фильтр-Насос Krystal Clear 2006л/ч для небольших бассейнов. Полная система фильтрации с картриджем для бассейнов до 4 500 литров. Легко устанавливается и обслуживается, эффективно очищает воду.",
+            en: "26604 Filter-Pump Krystal Clear 2006L/h for small pools. Complete filtration system with cartridge for pools up to 4,500 liters. Easy to install and maintain, effectively purifies water."
+        },
+        "filter-pump-26636.jpg": {
+            ro: "26636 Filtru-Pompă Krystal Clear 5678L/h cu Timer. Sistem avansat cu timer programabil pentru filtrare eficientă. Pentru bazine până la 17.000 litri, cu opțiune de funcționare automată.",
+            ru: "26636 Фильтр-Насос Krystal Clear 5678л/ч с таймером. Продвинутая система с программируемым таймером для эффективной фильтрации. Для бассейнов до 17 000 литров, с опцией автоматической работы.",
+            en: "26636 Filter-Pump Krystal Clear 5678L/h with Timer. Advanced system with programmable timer for efficient filtration. For pools up to 17,000 liters, with automatic operation option."
+        },
+        "filter-pump-26638.jpg": {
+            ro: "26638 Filtru-pompă cartuș Krystal Clear 3785L/h. Pentru bazine până la 457 cm, cartuș tip A pentru filtrare fină. Performanță ridicată cu consum energetic redus.",
+            ru: "26638 Картриджный фильтр-насос Krystal Clear 3785л/ч. Для бассейнов до 457 см, картридж типа A для тонкой фильтрации. Высокая производительность с низким энергопотреблением.",
+            en: "26638 Cartridge filter-pump Krystal Clear 3785L/h. For pools up to 457 cm, type A cartridge for fine filtration. High performance with low energy consumption."
+        },
+        "sand-filter-26642.jpg": {
+            ro: "26642 Filtru-pompă cu nisip 3500 litri pe oră. Sistem de filtrare cu nisip pentru bazine medii. Filtrare superioară, retine particule până la 20 microni. Întreținere simplă - doar spălare inversă.",
+            ru: "26642 Песочный фильтр-насос 3500 литров в час. Система песочной фильтрации для средних бассейнов. Превосходная фильтрация, задерживает частицы до 20 микрон. Простое обслуживание - только обратная промывка.",
+            en: "26642 Sand filter-pump 3500 liters per hour. Sand filtration system for medium pools. Superior filtration, retains particles up to 20 microns. Simple maintenance - just backwashing."
+        },
+        "sand-filter-26644.jpg": {
+            ro: "26644 Filtru-pompă cu nisip Krystal Clear 5700L/h. Pentru bazine mari până la 30.000 litri. Sistem SX1500 cu performanță profesională pentru apă cristalină.",
+            ru: "26644 Песочный фильтр-насос Krystal Clear 5700л/ч. Для больших бассейнов до 30 000 литров. Система SX1500 с профессиональной производительностью для кристально чистой воды.",
+            en: "26644 Sand filter-pump Krystal Clear 5700L/h. For large pools up to 30,000 liters. SX1500 system with professional performance for crystal clear water."
+        }
+    }
 }
 
-     return genericDescriptions[categoryId] || {
-        ro: 'Produs de calitate pentru activități de exterior și acvatice, durabil și ușor de utilizat.',
-        ru: 'Качественный продукт для мероприятий на открытом воздухе и водных мероприятий, долговечный и простой в использовании.',
-        en: 'Quality product for outdoor and water activities, durable and easy to use.'
+// Return product description object {ro,ru,en} for a given product id or fall back to generic
+function getProductDescription(productId, categoryId, subcategoryId) {
+    // If a specific description exists for this product id, return it
+    if (productId && PRODUCT_DESCRIPTIONS && PRODUCT_DESCRIPTIONS[productId]) {
+        return PRODUCT_DESCRIPTIONS[productId];
+    }
+
+    // Fallback: generate a simple generic description per language
+    const genericByCategory = {
+        ro: (categoryId && typeof categoryId === 'string') ? `Produs din categoria ${categoryId}` : 'Produs de calitate pentru activități de exterior și acvatice, durabil și ușor de utilizat.',
+        ru: (categoryId && typeof categoryId === 'string') ? `Товар из категории ${categoryId}` : 'Качественный продукт для мероприятий на открытом воздухе и водных мероприятий, долговечный и простой в использовании.',
+        en: (categoryId && typeof categoryId === 'string') ? `Product from category ${categoryId}` : 'Quality product for outdoor and water activities, durable and easy to use.'
     };
+
+    return genericByCategory;
+}
 
 // Funcție pentru a adăuga descrieri la toate produsele
 function enhanceAllProductsWithDescriptions() {
@@ -1288,7 +1648,7 @@ function enhanceAllProductsWithDescriptions() {
         return [];
     }
     const allProducts = [];
-    
+   
     // Adaugă produsele din PRODUCTS_DATA cu descrieri
     if (typeof PRODUCTS_DATA !== 'undefined') {
         PRODUCTS_DATA.forEach(product => {
@@ -1299,7 +1659,7 @@ function enhanceAllProductsWithDescriptions() {
             allProducts.push(enhancedProduct);
         });
     }
-    
+   
     // Adaugă produsele din POOLS_PRODUCTS cu descrieri
     if (typeof POOLS_PRODUCTS !== 'undefined' && POOLS_PRODUCTS.pools) {
         POOLS_PRODUCTS.pools.forEach(product => {
@@ -1313,7 +1673,7 @@ function enhanceAllProductsWithDescriptions() {
          allProducts.push(enhancedProduct);
         });
     }
-    
+   
     return allProducts;
 }
 
@@ -1330,7 +1690,7 @@ if (typeof window !== 'undefined') {
        // Adaugă și funcția pentru a extinde produsele existente
     window.enhanceExistingProducts = function(productsArray) {
         if (!Array.isArray(productsArray)) return productsArray;
-        
+       
         return productsArray.map(product => {
             return {
                 ...product,
