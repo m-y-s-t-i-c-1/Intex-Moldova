@@ -1630,6 +1630,17 @@ function getProductDescription(productId, categoryId, subcategoryId) {
         return PRODUCT_DESCRIPTIONS[productId];
     }
 
+    // Handle pool product IDs (format: pool_0000, pool_0001, etc.)
+    // Map them to their description keys (kp1, kp2, etc.)
+    if (productId && productId.startsWith('pool_')) {
+        const poolIndex = parseInt(productId.replace('pool_', ''), 10);
+        // Pool products start from index 0, descriptions start from kp1
+        const descriptionKey = `kp${poolIndex + 1}`;
+        if (PRODUCT_DESCRIPTIONS && PRODUCT_DESCRIPTIONS[descriptionKey]) {
+            return PRODUCT_DESCRIPTIONS[descriptionKey];
+        }
+    }
+
     // Fallback: generate a simple generic description per language
     const genericByCategory = {
         ro: (categoryId && typeof categoryId === 'string') ? `Produs din categoria ${categoryId}` : 'Produs de calitate pentru activități de exterior și acvatice, durabil și ușor de utilizat.',
@@ -1662,15 +1673,18 @@ function enhanceAllProductsWithDescriptions() {
    
     // Adaugă produsele din POOLS_PRODUCTS cu descrieri
     if (typeof POOLS_PRODUCTS !== 'undefined' && POOLS_PRODUCTS.pools) {
-        POOLS_PRODUCTS.pools.forEach(product => {
+        POOLS_PRODUCTS.pools.forEach((product, index) => {
+            // Generate consistent pool IDs based on index: pool_0000, pool_0001, etc.
+            const poolId = `pool_${String(index).padStart(4, '0')}`;
+            
             const enhancedProduct = {
                 ...product,
-                id: product.id || `pool_${Math.random().toString(36).substr(2, 9)}`,
+                id: poolId,
                 category: 'baseine_intex',
                 subcategory: product.sub || product.subcategory || '',
-                description: getProductDescription(product.id, 'baseine_intex', product.sub || product.subcategory)
+                description: getProductDescription(poolId, 'baseine_intex', product.sub || product.subcategory)
             };
-         allProducts.push(enhancedProduct);
+            allProducts.push(enhancedProduct);
         });
     }
    

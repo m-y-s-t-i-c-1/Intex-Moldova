@@ -1592,7 +1592,7 @@ const PRODUCTS_DATA = [
             en: 'Repair Kit'
         },
         price: 20,
-        image: standardizeImagePath('Categoria barci 4.jpg')
+        image: standardizeImagePath('Categoria barci 12.jpg')
     },
     {
         id: 'b5',
@@ -1605,7 +1605,7 @@ const PRODUCTS_DATA = [
         },
         price: 2499,
         oldPrice: 3599,
-        image: standardizeImagePath('Categoria barci 5.jpg')
+        image: standardizeImagePath('Categoria barci 4.jpg')
     },
     {
         id: 'b6',
@@ -1618,7 +1618,7 @@ const PRODUCTS_DATA = [
         },
         price: 999,
         oldPrice: 1499,
-        image: standardizeImagePath('Categoria barci 6.jpg')
+        image: standardizeImagePath('Categoria barci 5.jpg')
     },
     {
         id: 'b7',
@@ -1631,7 +1631,7 @@ const PRODUCTS_DATA = [
         },
         price: 2299,
         oldPrice: 3299,
-        image: standardizeImagePath('Categoria barci 7.png')
+        image: standardizeImagePath('Categoria barci 6.jpg')
     },
     {
         id: 'b8',
@@ -1644,7 +1644,7 @@ const PRODUCTS_DATA = [
         },
         price: 879,
         oldPrice: 1199,
-        image: standardizeImagePath('Categoria barci 8.jpg')
+        image: standardizeImagePath('Categoria barci 7.png')
     },
     {
         id: 'b9',
@@ -1657,7 +1657,7 @@ const PRODUCTS_DATA = [
         },
         price: 1439,
         oldPrice: 1999,
-        image: standardizeImagePath('Categoria barci 9.jpg')
+        image: standardizeImagePath('Categoria barci 8.jpg')
     },
     {
         id: 'b10',
@@ -1670,7 +1670,7 @@ const PRODUCTS_DATA = [
         },
         price: 1759,
         oldPrice: 2499,
-        image: standardizeImagePath('Categoria barci 10.jpg')
+        image: standardizeImagePath('Categoria barci 9.jpg')
     },
     {
         id: 'b11',
@@ -1682,7 +1682,7 @@ const PRODUCTS_DATA = [
             en: 'Aluminum oars 137 cm, set of 2'
         },
         price: 379,
-        image: standardizeImagePath('Categoria barci 11.jpg')
+        image: standardizeImagePath('Categoria barci 10.jpg')
     },
     {
         id: 'b12',
@@ -1695,7 +1695,7 @@ const PRODUCTS_DATA = [
         },
         price: 5299,
         oldPrice: 6999,
-        image: standardizeImagePath('Categoria barci 12.jpg')
+        image: standardizeImagePath('Categoria barci 11.jpg')
     },
 
     // categoria de terenuri de joacă

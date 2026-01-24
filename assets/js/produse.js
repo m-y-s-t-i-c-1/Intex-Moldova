@@ -70,12 +70,15 @@
         }
 
         if (typeof POOLS_PRODUCTS !== 'undefined' && POOLS_PRODUCTS.pools) {
-            POOLS_PRODUCTS.pools.forEach(p => {
+            POOLS_PRODUCTS.pools.forEach((p, index) => {
                 const pSub = (p.sub || p.subcategory || '').toString();
                 const isAccessorySub = accessoryAliases.includes(pSub);
 
+                // Generate consistent pool IDs based on index
+                const poolId = `pool_${String(index).padStart(4, '0')}`;
+
                 const item = Object.assign({
-                    id: p.id || ('pool_' + Math.random().toString(36).slice(2, 9)),
+                    id: poolId,
                     category: isAccessorySub ? 'swim-accessories' : 'baseine_intex',
                     subcategory: p.sub || p.subcategory || null,
                     title: p.title,
@@ -134,7 +137,6 @@
         saveCart();
         updateCartCount();
         renderCartItems();
-        openCart();
     }
 
     function removeFromCart(id) {
@@ -560,12 +562,14 @@
                     </div>` : 
                     `<div class="price-val">${formatPrice(p.price)}</div>`;
                 
+                const isMobile = window.innerWidth < 768;
                 card.innerHTML = `
                     <div class="img-wrapper">
                         <img src="${img}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2NjYyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjE4IiBmaWxsPSIjMDAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
                     </div>
                     <h5 class="product-title" style="margin:10px 0; height:40px; overflow:hidden;">${title}</h5>
                     ${desc ? `<p class="product-description" style="margin:5px 0; font-size:0.9em; color:#666; height:30px; overflow:hidden;">${desc}</p>` : ''}
+                    ${isMobile && desc ? `<a class="read-more-link" style="display:block; color:#ff6b35; text-decoration:none; font-size:0.85em; margin:8px 0; cursor:pointer;">Citește mai mult</a>` : ''}
                     <div class="product-price" style="margin-bottom:15px;">${priceHtml}</div>
                     <button class="btn-main btn-add-cart" style="width:100%; padding:10px; cursor:pointer;">
                         <i class="fas fa-shopping-cart"></i> ${addText}
@@ -575,10 +579,12 @@
                 const btn = card.querySelector('.btn-add-cart');
                 btn.addEventListener('click', (e) => { e.stopPropagation(); addToCart(p.id || p.title); });
                 
-                // Open product details modal on card click (for tablets and larger screens)
-                if (window.innerWidth >= 768) {
-                    card.addEventListener('click', () => openProductModal(p));
-                }
+                // On both mobile and larger screens: open modal on card click
+                card.addEventListener('click', (e) => {
+                    // Don't open modal if clicking the add to cart button
+                    if (e.target.closest('.btn-add-cart')) return;
+                    openProductModal(p);
+                });
                 
                 productsGrid.appendChild(card);
             });
@@ -690,12 +696,14 @@
                 </div>` : 
                 `<div class="price-val">${formatPrice(p.price)}</div>`;
             
+            const isMobile = window.innerWidth < 768;
             card.innerHTML = `
                 <div class="img-wrapper">
                     <img src="${img}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2NjYyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjE4IiBmaWxsPSIjMDAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
                 </div>
                 <h5 class="product-title" style="margin:10px 0; height:40px; overflow:hidden;">${title}</h5>
                 ${descText ? `<p class="product-description" style="margin:5px 0; font-size:0.9em; color:#666; height:30px; overflow:hidden;">${descText}</p>` : ''}
+                ${isMobile && descText ? `<a class="read-more-link" style="display:block; color:#ff6b35; text-decoration:none; font-size:0.85em; margin:8px 0; cursor:pointer;">Citește mai mult</a>` : ''}
                 <div class="product-price" style="margin-bottom:15px;">${priceHtml}</div>
                     <button class="btn-main btn-add-cart" style="width:100%; padding:10px; cursor:pointer;">
                         <i class="fas fa-shopping-cart"></i> ${addText}
@@ -705,10 +713,12 @@
             const btn = card.querySelector('.btn-add-cart');
             btn.addEventListener('click', (e) => { e.stopPropagation(); addToCart(p.id || p.title); });
             
-            // Open product details modal on card click (for tablets and larger screens)
-            if (window.innerWidth >= 768) {
-                card.addEventListener('click', () => openProductModal(p));
-            }
+            // On both mobile and larger screens: open modal on card click
+            card.addEventListener('click', (e) => {
+                // Don't open modal if clicking the add to cart button
+                if (e.target.closest('.btn-add-cart')) return;
+                openProductModal(p);
+            });
             
             productsGrid.appendChild(card);
         });
@@ -1119,11 +1129,21 @@ function openProductModal(product) {
 
 function closeProductModal() {
     const modal = document.getElementById('product-modal');
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-        document.body.classList.remove('modal-open');
+    const modalContent = document.querySelector('.product-modal-content');
+    
+    if (modal && modalContent) {
+        // Add closing animation
+        modalContent.classList.add('closing');
+        
+        // Wait for animation to finish, then remove active class
+        setTimeout(() => {
+            modal.classList.remove('active');
+            modalContent.classList.remove('closing');
+            document.body.style.overflow = '';
+            document.body.classList.remove('modal-open');
+        }, 300);
     }
+    
     currentModalProduct = null;
     modalQty = 1;
 }

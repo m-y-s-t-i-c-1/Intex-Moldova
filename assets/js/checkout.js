@@ -45,10 +45,21 @@ function displayCheckoutItems() {
     
     let subtotal = 0;
     const allProducts = getAllProducts();
+    console.log('[DEBUG Checkout] Total products available:', allProducts.length);
+    console.log('[DEBUG Checkout] Cart items:', cart.length);
     
-    cart.forEach(cartItem => {
-        const product = allProducts.find(p => p.id === cartItem.id);
-        if (!product) return;
+    cart.forEach((cartItem, index) => {
+        console.log(`[DEBUG Checkout] Looking for product with id: ${cartItem.id}`);
+        const product = allProducts.find(p => {
+            const match = p.id === cartItem.id || p.id.toString() === cartItem.id.toString();
+            if (match) console.log(`[DEBUG Checkout] Found product:`, p.title);
+            return match;
+        });
+        
+        if (!product) {
+            console.warn(`[DEBUG Checkout] Product not found for cart item:`, cartItem.id);
+            return;
+        }
         
         const title = getProductTitle(product);
         const price = product.price || 0;
@@ -66,6 +77,7 @@ function displayCheckoutItems() {
         container.appendChild(itemEl);
     });
     
+    console.log('[DEBUG Checkout] Subtotal calculated:', subtotal);
     updateTotals(subtotal);
 }
 
@@ -145,26 +157,73 @@ function submitOrder() {
     window.location.href = './produse.html';
 }
 
-// Get all products (merged from data.js)
+// Get all products (merged from data.js and using descriptions)
 function getAllProducts() {
-    // This assumes PRODUCTS_DATA and POOLS_PRODUCTS are loaded from data.js
-    let allProducts = [...(PRODUCTS_DATA || [])];
-    
-    if (POOLS_PRODUCTS && POOLS_PRODUCTS.pools) {
-        POOLS_PRODUCTS.pools.forEach(pool => {
-            const product = {
-                id: 'pool_' + Math.random().toString(36).substr(2, 9),
-                title: pool.title,
-                price: pool.price,
-                image: pool.image,
-                category: 'baseine_intex',
-                __fromPools: true
+    // Dacă avem funcția de descrieri, folosește-o
+    if (typeof getAllProductsWithDescriptions === 'function') {
+        console.log('[DEBUG Checkout] Using getAllProductsWithDescriptions from descrieri_produse.js');
+        const allProducts = getAllProductsWithDescriptions();
+        const accessoryAliases = ['accessories', 'swim-accessories', 'boats_pool_accessories', 'boats_care', 'pool_accessories'];
+        
+        return allProducts.map(p => {
+            let cat = p.category;
+            if (cat === 'pools') cat = 'baseine_intex';
+            if (accessoryAliases.includes(cat)) cat = 'swim-accessories';
+            return { 
+                ...p, 
+                category: cat 
             };
-            allProducts.push(product);
         });
     }
     
-    return allProducts;
+    console.log('[DEBUG Checkout] getAllProductsWithDescriptions NOT available, using fallback');
+    
+    // Fallback la vechea metodă dacă descriptions.js nu este încărcat
+    const list = [];
+    const accessoryAliases = ['accessories', 'swim-accessories', 'boats_pool_accessories', 'boats_care', 'pool_accessories'];
+    
+    if (typeof PRODUCTS_DATA !== 'undefined') {
+        PRODUCTS_DATA.forEach(p => {
+            let cat = p.category;
+            if (cat === 'pools') cat = 'baseine_intex';
+            if (accessoryAliases.includes(cat)) cat = 'swim-accessories';
+            const newProd = Object.assign({}, p, { 
+                category: cat
+            });
+            list.push(newProd);
+        });
+    }
+
+    if (typeof POOLS_PRODUCTS !== 'undefined' && POOLS_PRODUCTS.pools) {
+        POOLS_PRODUCTS.pools.forEach(p => {
+            const pSub = (p.sub || p.subcategory || '').toString();
+            const isAccessorySub = accessoryAliases.includes(pSub);
+
+            const item = Object.assign({
+                id: p.id || ('pool_' + Math.random().toString(36).slice(2, 9)),
+                category: isAccessorySub ? 'swim-accessories' : 'baseine_intex',
+                subcategory: p.sub || p.subcategory || null,
+                title: p.title,
+                price: p.price || 0,
+                oldPrice: p.oldPrice || null,
+                __fromPools: true
+            }, p);
+
+            list.push(item);
+        });
+    }
+
+    // Dacă există funcționalitate pentru a atașa descrieri, folosește-o
+    if (typeof enhanceExistingProducts === 'function') {
+        try { 
+            console.log('[DEBUG Checkout] Using enhanceExistingProducts, list length before:', list.length);
+            const enhanced = enhanceExistingProducts(list);
+            console.log('[DEBUG Checkout] List enhanced, first product description:', enhanced[0]?.description?.substring(0, 50));
+            return enhanced;
+        } catch (e) { console.log('[DEBUG Checkout] enhanceExistingProducts error:', e.message); }
+    }
+
+    return list;
 }
 
 // Restore language from localStorage and set language selector
