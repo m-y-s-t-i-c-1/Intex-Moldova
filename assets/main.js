@@ -642,30 +642,58 @@ function switchTab(tab) {
 
 function handleLogin(event) {
     event.preventDefault();
+    console.log('[FORM] Login form submitted');
     
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
     
+    console.log('[FORM] Email:', email, 'Password length:', password.length);
+    
     if (!email || !password) {
-        alert('Vă rugăm să completați toate câmpurile!');
+        console.warn('[FORM] Missing email or password');
+        if (window.showError) {
+            window.showError('Vă rugăm să completați toate câmpurile!');
+        } else {
+            alert('Vă rugăm să completați toate câmpurile!');
+        }
         return;
     }
     
-    // Here you would typically send the data to your backend
-    // For now, we'll simulate a successful login
-    console.log('Login attempt:', { email, password });
+    // Use auth manager
+    if (!window.authManager) {
+        console.error('[AUTH] authManager not available');
+        alert('Sistem de autentificare nu e inițializat!');
+        return;
+    }
     
-    // Simulate API call
-    setTimeout(() => {
-        alert('Autentificare reușită! Bine ați venit.');
+    console.log('[AUTH] Attempting login with email:', email);
+    const result = window.authManager.login(email, password);
+    console.log('[AUTH] Login result:', result);
+    
+    if (result.success) {
+        console.log('[AUTH] Login successful');
+        if (window.showSuccess) {
+            window.showSuccess(result.message);
+        } else {
+            alert(result.message);
+        }
         closeLoginModal();
-        // Here you would update the UI to show logged in state
-        updateLoginState(true, email);
-    }, 1000);
+        updateLoginState(true, result.user);
+        // Clear form
+        document.getElementById('loginForm').reset();
+    } else {
+        console.error('[AUTH] Login failed:', result.message);
+        if (window.showError) {
+            window.showError(result.message);
+        } else {
+            alert(result.message);
+        }
+    }
 }
 
 function handleRegister(event) {
     event.preventDefault();
+    console.log('[FORM] Register form submitted');
     
     const name = document.getElementById('register-name').value;
     const email = document.getElementById('register-email').value;
@@ -673,49 +701,100 @@ function handleRegister(event) {
     const password = document.getElementById('register-password').value;
     const confirmPassword = document.getElementById('register-confirm-password').value;
     
-    if (!name || !email || !password || !confirmPassword) {
-        alert('Vă rugăm să completați toate câmpurile obligatorii!');
+    console.log('[FORM] Register data - Name:', name, 'Email:', email, 'Phone:', phone);
+    
+    // Use auth manager
+    if (!window.authManager) {
+        console.error('[AUTH] authManager not available');
+        alert('Sistem de autentificare nu e inițializat!');
         return;
     }
     
-    if (password !== confirmPassword) {
-        alert('Parolele nu se potrivesc!');
-        return;
+    console.log('[AUTH] Attempting register with email:', email);
+    const result = window.authManager.register({
+        name,
+        email,
+        phone,
+        password,
+        confirmPassword
+    });
+    console.log('[AUTH] Register result:', result);
+    
+    if (result.success) {
+        console.log('[AUTH] Register successful');
+        if (window.showSuccess) {
+            window.showSuccess('Înregistrare reușită! Se autentifică...');
+        } else {
+            alert('Înregistrare reușită! Se autentifică...');
+        }
+        document.getElementById('registerForm').reset();
+        
+        // Auto-login after registration
+        console.log('[AUTH] Auto-login in 500ms...');
+        setTimeout(() => {
+            console.log('[AUTH] Starting auto-login');
+            const loginResult = window.authManager.login(email, password);
+            console.log('[AUTH] Auto-login result:', loginResult);
+            if (loginResult.success) {
+                closeLoginModal();
+                updateLoginState(true, loginResult.user);
+                if (window.showSuccess) {
+                    window.showSuccess('Bine ați venit, ' + name + '!', 'Autentificare automată');
+                } else {
+                    alert('Bine ați venit, ' + name + '!');
+                }
+            }
+        }, 500);
+    } else {
+        console.error('[AUTH] Register failed:', result.message);
+        if (window.showError) {
+            window.showError(result.message);
+        } else {
+            alert(result.message);
+        }
     }
-    
-    if (password.length < 6) {
-        alert('Parola trebuie să aibă cel puțin 6 caractere!');
-        return;
-    }
-    
-    // Here you would typically send the data to your backend
-    console.log('Register attempt:', { name, email, phone, password });
-    
-    // Simulate API call
-    setTimeout(() => {
-        alert('Înregistrare reușită! Vă rugăm să vă autentificați.');
-        switchTab('login');
-    }, 1000);
 }
 
-function updateLoginState(isLoggedIn, userEmail = '') {
+function updateLoginState(isLoggedIn, user = null) {
     const loginBtn = document.getElementById('loginBtn');
     if (loginBtn) {
-        if (isLoggedIn) {
-            loginBtn.innerHTML = '<i class="fas fa-user-check"></i>';
-            loginBtn.title = `Conectat ca ${userEmail}`;
-            loginBtn.onclick = () => showUserMenu();
+        if (isLoggedIn && user) {
+            const avatarUrl = user.avatar || 'https://www.gravatar.com/avatar/default?d=identicon&s=32';
+            const userName = typeof user === 'object' ? user.name : user;
+            
+            loginBtn.innerHTML = `<img src="${avatarUrl}" alt="${userName}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">`;
+            loginBtn.title = `Conectat ca ${userName}`;
+            loginBtn.style.cursor = 'pointer';
+            loginBtn.style.border = 'none';
+            loginBtn.style.background = 'none';
+            loginBtn.style.padding = '0';
+            
+            loginBtn.onclick = () => showUserMenu(user);
+            // Remove click listener to open modal
+            loginBtn.removeEventListener('click', openLoginModal);
         } else {
             loginBtn.innerHTML = '<i class="fas fa-user"></i>';
             loginBtn.title = 'Contul Meu';
+            loginBtn.style.cursor = 'pointer';
             loginBtn.onclick = openLoginModal;
         }
     }
 }
 
-function showUserMenu() {
-    // This would show a dropdown menu with user options
-    alert('Meniu utilizator - funcționalitate în dezvoltare');
+function showUserMenu(user) {
+    const userName = typeof user === 'object' ? user.name : '';
+    const userEmail = typeof user === 'object' ? user.email : '';
+    
+    const action = confirm(`Utilizator: ${userName}\n${userEmail}\n\nClick OK pentru deconectare`);
+    if (action) {
+        window.authManager.logout();
+        updateLoginState(false);
+        window.showSuccess('Ați fost deconectat cu succes');
+        // Reload page or update UI
+        if (window.location.pathname.includes('checkout')) {
+            window.location.href = '../index.html';
+        }
+    }
 }
 
 function setLanguage(lang) {
@@ -1067,7 +1146,13 @@ function initialize() {
     // Setup login button
     const loginBtn = document.getElementById('loginBtn');
     if (loginBtn) {
-        loginBtn.addEventListener('click', openLoginModal);
+        // Check if user is already logged in
+        const currentUser = window.authManager.getCurrentUser();
+        if (currentUser) {
+            updateLoginState(true, currentUser);
+        } else {
+            loginBtn.addEventListener('click', openLoginModal);
+        }
     }
     
     // Setup login forms
@@ -1122,3 +1207,7 @@ window.closeSearch = closeSearch;
 window.openLoginModal = openLoginModal;
 window.closeLoginModal = closeLoginModal;
 window.switchTab = switchTab;
+window.handleLogin = handleLogin;
+window.handleRegister = handleRegister;
+window.updateLoginState = updateLoginState;
+window.showUserMenu = showUserMenu;

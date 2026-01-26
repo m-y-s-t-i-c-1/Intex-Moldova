@@ -1354,6 +1354,9 @@ body.dark-mode #search-input {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-btn:hover {
@@ -1364,6 +1367,20 @@ body.dark-mode #search-input {
 
 .login-btn i {
     font-size: 1.1rem;
+}
+
+.login-btn img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover img {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px rgba(14, 165, 233, 0.5);
 }
 
 /* =========================================
