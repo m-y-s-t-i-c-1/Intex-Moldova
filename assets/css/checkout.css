@@ -180,7 +180,7 @@ body.dark-mode .form-group textarea {
 
 .radio-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 12px;
 }
 
@@ -193,6 +193,8 @@ body.dark-mode .form-group textarea {
     cursor: pointer;
     transition: all 0.3s;
     background: var(--input-bg, #fff);
+    flex: 1;
+    justify-content: flex-start;
 }
 
 .radio-label:hover {
@@ -309,6 +311,7 @@ body.dark-mode .radio-label:hover {
 
     .radio-group {
         gap: 10px;
+        flex-direction: column;
     }
 
     .radio-label {
