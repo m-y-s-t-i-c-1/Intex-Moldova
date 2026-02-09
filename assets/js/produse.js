@@ -137,19 +137,87 @@
         saveCart();
         updateCartCount();
         renderCartItems();
+        // Show notification with product title
+        try {
+            const products = getAllProducts();
+            const p = products.find(x=>String(x.id) === String(id));
+            let title = id;
+            if (p) {
+                if (p.title && typeof p.title === 'object') {
+                    const lang = getLang();
+                    title = p.title[lang] || p.title.ro || Object.values(p.title)[0] || id;
+                } else {
+                    title = p.title || id;
+                }
+            }
+            const lang = getLang();
+            const t = (window.translations && window.translations[lang]) ? window.translations[lang] : (window.translations && window.translations.ro) || {};
+            const template = t.add_to_cart_success || '{title} a fost adăugat în coș';
+            const msg = template.replace('{title}', title);
+            if (window.showSuccess) window.showSuccess(msg); else alert(msg);
+        } catch (e) { /* ignore */ }
     }
 
     function removeFromCart(id) {
-        State.cart = State.cart.filter(i=>i.id!==id);
-        saveCart(); updateCartCount(); renderCartItems();
+        // Try to get product title for a friendly message
+        try {
+            const products = getAllProducts();
+            const p = products.find(x=>String(x.id) === String(id));
+            let title = id;
+            if (p) {
+                if (p.title && typeof p.title === 'object') {
+                    const lang = getLang();
+                    title = p.title[lang] || p.title.ro || Object.values(p.title)[0] || id;
+                } else {
+                    title = p.title || id;
+                }
+            }
+
+            State.cart = State.cart.filter(i=>i.id!==id);
+            saveCart(); updateCartCount(); renderCartItems();
+
+            const lang = getLang();
+            const t = (window.translations && window.translations[lang]) ? window.translations[lang] : (window.translations && window.translations.ro) || {};
+            const template = t.removed_from_cart || '{title} a fost eliminat din coș';
+            const msg = template.replace('{title}', title);
+            if (window.showSuccess) window.showSuccess(msg); else alert(msg);
+        } catch (e) {
+            State.cart = State.cart.filter(i=>i.id!==id);
+            saveCart(); updateCartCount(); renderCartItems();
+        }
     }
 
     function changeQty(id, delta) {
         const it = State.cart.find(i=>i.id===id);
         if (!it) return;
         it.qty = (it.qty||0) + delta;
-        if (it.qty <= 0) removeFromCart(id);
-        else { saveCart(); updateCartCount(); renderCartItems(); }
+        if (it.qty <= 0) {
+            // removal will show notification
+            removeFromCart(id);
+        } else {
+            saveCart(); updateCartCount(); renderCartItems();
+            try {
+                const products = getAllProducts();
+                const p = products.find(x=>String(x.id) === String(id));
+                let title = id;
+                if (p) {
+                    if (p.title && typeof p.title === 'object') {
+                        const lang = getLang();
+                        title = p.title[lang] || p.title.ro || Object.values(p.title)[0] || id;
+                    } else {
+                        title = p.title || id;
+                    }
+                }
+                if (window.showInfo) window.showInfo((window.translations && window.translations[getLang()] && window.translations[getLang()].qty_updated) ? window.translations[getLang()].qty_updated.replace('{title}', title) : 'Cantitate actualizată pentru ' + title);
+                else {
+                    const lang = getLang();
+                    const t = (window.translations && window.translations[lang]) ? window.translations[lang] : (window.translations && window.translations.ro) || {};
+                    const template = t.qty_updated || 'Cantitate actualizată pentru {title}';
+                    const msg = template.replace('{title}', title);
+                    alert(msg);
+                }
+            } catch (e) { /* ignore */ }
+        }
     }
 
     function renderCartItems() {
@@ -1069,6 +1137,9 @@
 
     // Expose renderCartItems so other scripts may call it
     window.renderCartItems = renderCartItems;
+    window.addToCart = addToCart;
+    window.removeFromCart = removeFromCart;
+    window.changeQty = changeQty;
     window.performSearch = performSearch;
     window.openCart = openCart;
     window.closeCart = closeCart;

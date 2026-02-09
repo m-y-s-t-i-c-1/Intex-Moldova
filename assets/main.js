@@ -107,6 +107,18 @@ const translations = {
             login_btn: "Autentificare",
             register_btn: "Înregistrare",
             forgot_password: "Ai uitat parola?"
+
+            ,
+            // Generic action messages (used by toasts and modals)
+            add_to_cart_success: "{title} a fost adăugat în coș",
+            removed_from_cart: "{title} a fost eliminat din coș",
+            qty_updated: "Cantitate actualizată pentru {title}",
+            order_placed_toast: "Comanda a fost plasată cu succes!",
+            order_confirm_title: "Comanda a fost plasată!",
+            order_confirm_message: "Mulțumim pentru cumpărături. Comanda ta ({orderId}) a fost înregistrată. Vei fi contactat în curând pentru confirmare și detalii de livrare.",
+            order_view_orders: "Vezi comenzile",
+            order_continue: "Continuă cumpărăturile",
+            fill_required: "Completați toate câmpurile obligatorii!"
             ,
             terms_title: "Termeni și Condiții de Utilizare",
             terms_subtitle: "Acest document stabilește termenii de utilizare a site-ului și condițiile de achiziționare a produselor comercializate de Zova Grup SRL.",
@@ -631,13 +643,22 @@ function closeLoginModal() {
 }
 
 function switchTab(tab) {
-    // Update tab buttons
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    // Update tab buttons - find the button by comparing to the container we want to show
+    const buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach((btn, index) => {
+        if ((index === 0 && tab === 'login') || (index === 1 && tab === 'register')) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
     
     // Update form containers
     document.querySelectorAll('.form-container').forEach(container => container.classList.remove('active'));
-    document.getElementById(tab + '-form').classList.add('active');
+    const activeForm = document.getElementById(tab + '-form');
+    if (activeForm) {
+        activeForm.classList.add('active');
+    }
 }
 
 function handleLogin(event) {
@@ -651,10 +672,13 @@ function handleLogin(event) {
     
     if (!email || !password) {
         console.warn('[FORM] Missing email or password');
+        const _langF = localStorage.getItem('intex_language') || 'ro';
+        const _tF = (window.translations && window.translations[_langF]) ? window.translations[_langF] : (window.translations && window.translations.ro) || {};
+        const missingMsg = _tF.fill_required || 'Vă rugăm să completați toate câmpurile!';
         if (window.showError) {
-            window.showError('Vă rugăm să completați toate câmpurile!');
+            window.showError(missingMsg);
         } else {
-            alert('Vă rugăm să completați toate câmpurile!');
+            alert(missingMsg);
         }
         return;
     }
@@ -662,7 +686,9 @@ function handleLogin(event) {
     // Use auth manager
     if (!window.authManager) {
         console.error('[AUTH] authManager not available');
-        alert('Sistem de autentificare nu e inițializat!');
+        const _lang = localStorage.getItem('intex_language') || 'ro';
+        const _t = (window.translations && window.translations[_lang]) ? window.translations[_lang] : (window.translations && window.translations.ro) || {};
+        alert(_t.auth_not_initialized || 'Sistem de autentificare nu e inițializat!');
         return;
     }
     
@@ -722,10 +748,12 @@ function handleRegister(event) {
     
     if (result.success) {
         console.log('[AUTH] Register successful');
+        const _lang = localStorage.getItem('intex_language') || 'ro';
+        const _t = (window.translations && window.translations[_lang]) ? window.translations[_lang] : (window.translations && window.translations.ro) || {};
         if (window.showSuccess) {
-            window.showSuccess('Înregistrare reușită! Se autentifică...');
+            window.showSuccess(_t.auth_registration_auto || 'Înregistrare reușită! Se autentifică...');
         } else {
-            alert('Înregistrare reușită! Se autentifică...');
+            alert(_t.auth_registration_auto || 'Înregistrare reușită! Se autentifică...');
         }
         document.getElementById('registerForm').reset();
         
@@ -738,10 +766,13 @@ function handleRegister(event) {
             if (loginResult.success) {
                 closeLoginModal();
                 updateLoginState(true, loginResult.user);
+                const _lang2 = localStorage.getItem('intex_language') || 'ro';
+                const _t2 = (window.translations && window.translations[_lang2]) ? window.translations[_lang2] : (window.translations && window.translations.ro) || {};
+                const welcome = (_t2.auth_welcome || 'Bine ați venit, {name}!').replace('{name}', name);
                 if (window.showSuccess) {
-                    window.showSuccess('Bine ați venit, ' + name + '!', 'Autentificare automată');
+                    window.showSuccess(welcome, _t2.auth_welcome_title || 'Autentificare automată');
                 } else {
-                    alert('Bine ați venit, ' + name + '!');
+                    alert(welcome);
                 }
             }
         }, 500);
@@ -782,19 +813,86 @@ function updateLoginState(isLoggedIn, user = null) {
 }
 
 function showUserMenu(user) {
+    // Remove existing menu if present
+    const existing = document.querySelector('.user-menu');
+    if (existing) existing.remove();
+
+    const loginBtn = document.getElementById('loginBtn');
     const userName = typeof user === 'object' ? user.name : '';
     const userEmail = typeof user === 'object' ? user.email : '';
-    
-    const action = confirm(`Utilizator: ${userName}\n${userEmail}\n\nClick OK pentru deconectare`);
-    if (action) {
+
+    // Create menu element
+    const menu = document.createElement('div');
+    menu.className = 'user-menu';
+    menu.innerHTML = `
+        <div class="user-menu-arrow" aria-hidden></div>
+        <div class="user-menu-body">
+            <div class="user-menu-header">
+                <img src="${user.avatar || 'https://www.gravatar.com/avatar/default?d=identicon&s=64'}" alt="avatar" class="user-menu-avatar">
+                <div class="user-menu-info">
+                    <div class="user-menu-name">${escapeHtml(userName)}</div>
+                    <div class="user-menu-email">${escapeHtml(userEmail)}</div>
+                </div>
+            </div>
+            <div class="user-menu-actions">
+                <button class="btn-main user-menu-logout">Deconectare</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(menu);
+
+    // Position the menu under the login button
+    try {
+        const rect = loginBtn.getBoundingClientRect();
+        const top = rect.bottom + window.scrollY + 8;
+        const left = Math.min(window.innerWidth - 260, rect.left + window.scrollX - 160 + rect.width / 2);
+        menu.style.position = 'absolute';
+        menu.style.top = top + 'px';
+        menu.style.left = left + 'px';
+    } catch (e) {
+        // fallback center
+        menu.style.right = '16px';
+        menu.style.top = '60px';
+    }
+
+    // Handlers
+    const logoutBtn = menu.querySelector('.user-menu-logout');
+    logoutBtn.addEventListener('click', () => {
         window.authManager.logout();
         updateLoginState(false);
-        window.showSuccess('Ați fost deconectat cu succes');
-        // Reload page or update UI
+        const _langL = localStorage.getItem('intex_language') || 'ro';
+        const _tL = (window.translations && window.translations[_langL]) ? window.translations[_langL] : (window.translations && window.translations.ro) || {};
+        if (window.showSuccess) window.showSuccess(_tL.auth_logout_success || 'Ați fost deconectat cu succes');
+        menu.remove();
         if (window.location.pathname.includes('checkout')) {
             window.location.href = '../index.html';
         }
+    });
+
+    // Close on outside click or escape
+    function onDocClick(e) {
+        if (!menu.contains(e.target) && e.target !== loginBtn) {
+            menu.remove();
+            document.removeEventListener('click', onDocClick);
+            document.removeEventListener('keydown', onKeyDown);
+        }
     }
+    function onKeyDown(e) {
+        if (e.key === 'Escape') {
+            menu.remove();
+            document.removeEventListener('click', onDocClick);
+            document.removeEventListener('keydown', onKeyDown);
+        }
+    }
+    setTimeout(() => document.addEventListener('click', onDocClick), 0);
+    document.addEventListener('keydown', onKeyDown);
+}
+
+// Utility: simple HTML escape
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function setLanguage(lang) {
@@ -1197,7 +1295,12 @@ function initialize() {
     try { window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: savedLang } })); } catch (e) { /* ignore */ }
 }
 
-document.addEventListener('DOMContentLoaded', initialize);
+// Ensure `initialize` runs whether DOMContentLoaded has already fired or not
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize);
+} else {
+    initialize();
+}
 
 // Expose translations and setLanguage globally for use in inline onclick handlers
 window.translations = translations;
@@ -1211,3 +1314,86 @@ window.handleLogin = handleLogin;
 window.handleRegister = handleRegister;
 window.updateLoginState = updateLoginState;
 window.showUserMenu = showUserMenu;
+
+// Ensure RU & EN translation keys exist for new messages (fallbacks)
+window.translations = window.translations || {};
+window.translations.ru = window.translations.ru || {
+    add_to_cart_success: "{title} добавлен в корзину",
+    removed_from_cart: "{title} удалён из корзины",
+    qty_updated: "Количество обновлено для {title}",
+    order_placed_toast: "Заказ успешно оформлен!",
+    order_confirm_title: "Заказ оформлен!",
+    order_confirm_message: "Спасибо за покупку. Ваш заказ ({orderId}) зарегистрирован. С вами свяжутся в ближайшее время для подтверждения и деталей доставки.",
+    order_view_orders: "Посмотреть заказы",
+    order_continue: "Продолжить покупки",
+    fill_required: "Заполните все обязательные поля!"
+};
+window.translations.ru.auth_password_incorrect = window.translations.ru.auth_password_incorrect || 'Неверный пароль';
+// Auth messages
+window.translations.ru.auth_invalid_name = window.translations.ru.auth_invalid_name || 'Пожалуйста, введите корректное имя (мин. 2 символа)';
+window.translations.ru.auth_invalid_email = window.translations.ru.auth_invalid_email || 'Пожалуйста, введите корректный email';
+window.translations.ru.auth_email_exists = window.translations.ru.auth_email_exists || 'Этот email уже зарегистрирован';
+window.translations.ru.auth_password_length = window.translations.ru.auth_password_length || 'Пароль должен содержать как минимум 6 символов';
+window.translations.ru.auth_passwords_mismatch = window.translations.ru.auth_passwords_mismatch || 'Пароли не совпадают';
+window.translations.ru.auth_registration_success = window.translations.ru.auth_registration_success || 'Регистрация прошла успешно! Теперь вы можете войти.';
+window.translations.ru.auth_login_invalid_credentials = window.translations.ru.auth_login_invalid_credentials || 'Неверный email или пароль';
+window.translations.ru.auth_login_success = window.translations.ru.auth_login_success || 'Вход выполнен успешно!';
+window.translations.ru.auth_logout_success = window.translations.ru.auth_logout_success || 'Вы успешно вышли из аккаунта';
+window.translations.ru.auth_user_not_found = window.translations.ru.auth_user_not_found || 'Пользователь не найден';
+window.translations.ru.auth_profile_updated = window.translations.ru.auth_profile_updated || 'Профиль успешно обновлён';
+window.translations.ru.auth_password_changed = window.translations.ru.auth_password_changed || 'Пароль успешно изменён';
+window.translations.ru.auth_account_deleted = window.translations.ru.auth_account_deleted || 'Аккаунт успешно удалён';
+window.translations.ru.auth_not_initialized = window.translations.ru.auth_not_initialized || 'Система аутентификации не инициализирована!';
+window.translations.ru.auth_registration_auto = window.translations.ru.auth_registration_auto || 'Регистрация прошла успешно! Выполняется вход...';
+window.translations.ru.auth_welcome = window.translations.ru.auth_welcome || 'Добро пожаловать, {name}!';
+window.translations.ru.auth_welcome_title = window.translations.ru.auth_welcome_title || 'Автоматическая аутентификация';
+window.translations.en = window.translations.en || {
+    add_to_cart_success: "{title} was added to cart",
+    removed_from_cart: "{title} was removed from cart",
+    qty_updated: "Quantity updated for {title}",
+    order_placed_toast: "Order placed successfully!",
+    order_confirm_title: "Order Placed!",
+    order_confirm_message: "Thank you for your purchase. Your order ({orderId}) has been recorded. We will contact you shortly for confirmation and delivery details.",
+    order_view_orders: "View Orders",
+    order_continue: "Continue Shopping",
+    fill_required: "Please fill all required fields!"
+};
+window.translations.en.auth_password_incorrect = window.translations.en.auth_password_incorrect || 'Incorrect password';
+// Ensure RO auth messages exist (fallback to existing Romanian strings)
+window.translations.ro = window.translations.ro || {};
+window.translations.ro.auth_invalid_name = window.translations.ro.auth_invalid_name || 'Vă rugăm să introduceti un nume valid (minim 2 caractere)';
+window.translations.ro.auth_invalid_email = window.translations.ro.auth_invalid_email || 'Vă rugăm să introduceti un email valid';
+window.translations.ro.auth_email_exists = window.translations.ro.auth_email_exists || 'Acest email este deja înregistrat';
+window.translations.ro.auth_password_length = window.translations.ro.auth_password_length || 'Parola trebuie să aibă cel puțin 6 caractere';
+window.translations.ro.auth_passwords_mismatch = window.translations.ro.auth_passwords_mismatch || 'Parolele nu se potrivesc';
+window.translations.ro.auth_registration_success = window.translations.ro.auth_registration_success || 'Înregistrare reușită! Acum vă puteți autentifica.';
+window.translations.ro.auth_login_invalid_credentials = window.translations.ro.auth_login_invalid_credentials || 'Email sau parolă incorectă';
+window.translations.ro.auth_login_success = window.translations.ro.auth_login_success || 'Autentificare reușită!';
+window.translations.ro.auth_logout_success = window.translations.ro.auth_logout_success || 'Deconectare reușită';
+window.translations.ro.auth_user_not_found = window.translations.ro.auth_user_not_found || 'Utilizator nu găsit';
+window.translations.ro.auth_profile_updated = window.translations.ro.auth_profile_updated || 'Profil actualizat cu succes';
+window.translations.ro.auth_password_incorrect = window.translations.ro.auth_password_incorrect || 'Parolă incorectă';
+window.translations.ro.auth_password_changed = window.translations.ro.auth_password_changed || 'Parolă schimbată cu succes';
+window.translations.ro.auth_account_deleted = window.translations.ro.auth_account_deleted || 'Cont șters cu succes';
+window.translations.ro.auth_not_initialized = window.translations.ro.auth_not_initialized || 'Sistem de autentificare nu e inițializat!';
+window.translations.ro.auth_registration_auto = window.translations.ro.auth_registration_auto || 'Înregistrare reușită! Se autentifică...';
+window.translations.ro.auth_welcome = window.translations.ro.auth_welcome || 'Bine ați venit, {name}!';
+window.translations.ro.auth_welcome_title = window.translations.ro.auth_welcome_title || 'Autentificare automată';
+// Auth messages
+window.translations.en.auth_invalid_name = window.translations.en.auth_invalid_name || 'Please enter a valid name (min 2 characters)';
+window.translations.en.auth_invalid_email = window.translations.en.auth_invalid_email || 'Please enter a valid email';
+window.translations.en.auth_email_exists = window.translations.en.auth_email_exists || 'This email is already registered';
+window.translations.en.auth_password_length = window.translations.en.auth_password_length || 'Password must be at least 6 characters';
+window.translations.en.auth_passwords_mismatch = window.translations.en.auth_passwords_mismatch || 'Passwords do not match';
+window.translations.en.auth_registration_success = window.translations.en.auth_registration_success || 'Registration successful! You can now log in.';
+window.translations.en.auth_login_invalid_credentials = window.translations.en.auth_login_invalid_credentials || 'Invalid email or password';
+window.translations.en.auth_login_success = window.translations.en.auth_login_success || 'Logged in successfully!';
+window.translations.en.auth_logout_success = window.translations.en.auth_logout_success || 'You have been logged out successfully';
+window.translations.en.auth_user_not_found = window.translations.en.auth_user_not_found || 'User not found';
+window.translations.en.auth_profile_updated = window.translations.en.auth_profile_updated || 'Profile updated successfully';
+window.translations.en.auth_password_changed = window.translations.en.auth_password_changed || 'Password changed successfully';
+window.translations.en.auth_account_deleted = window.translations.en.auth_account_deleted || 'Account deleted successfully';
+window.translations.en.auth_not_initialized = window.translations.en.auth_not_initialized || 'Authentication system is not initialized!';
+window.translations.en.auth_registration_auto = window.translations.en.auth_registration_auto || 'Registration successful! Logging in...';
+window.translations.en.auth_welcome = window.translations.en.auth_welcome || 'Welcome, {name}!';
+window.translations.en.auth_welcome_title = window.translations.en.auth_welcome_title || 'Automatic login';

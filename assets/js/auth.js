@@ -11,6 +11,21 @@ class AuthManager {
         console.log('[AUTH] AuthManager initialized');
     }
 
+    // Helper: get current language and translation
+    getLang() {
+        try { return localStorage.getItem('intex_language') || 'ro'; } catch (e) { return 'ro'; }
+    }
+
+    translate(key, fallback, params) {
+        const lang = this.getLang();
+        const t = (window.translations && window.translations[lang]) ? window.translations[lang] : (window.translations && window.translations.ro) || {};
+        let s = t[key] || fallback || key;
+        if (params) {
+            Object.keys(params).forEach(k => { s = s.replace('{' + k + '}', params[k]); });
+        }
+        return s;
+    }
+
     /**
      * Initialize users storage if it doesn't exist
      */
@@ -147,9 +162,10 @@ class AuthManager {
             let lNumberOfWords_temp1 = lMessageLength + 8;
             let lNumberOfWords_temp2 = (lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64;
             let lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;
-            let lWordArray = Array(lNumberOfWords - 1);
+            let lWordArray = new Array(lNumberOfWords - 1).fill(0);
             let lBytePosition = 0;
             let lByteCount = 0;
+            let lWordCount = 0;
             while (lByteCount < lMessageLength) {
                 lWordCount = (lByteCount - (lByteCount % 4)) / 4;
                 lBytePosition = (lByteCount % 4) * 8;
@@ -280,27 +296,27 @@ class AuthManager {
 
         if (!name || name.trim().length < 2) {
             console.warn('[AUTH.register] Invalid name:', name);
-            return { success: false, message: 'Vă rugăm să introduceti un nume valid (minim 2 caractere)' };
+            return { success: false, message: this.translate('auth_invalid_name', 'Vă rugăm să introduceti un nume valid (minim 2 caractere)') };
         }
 
         if (!this.isValidEmail(email)) {
             console.warn('[AUTH.register] Invalid email format:', email);
-            return { success: false, message: 'Vă rugăm să introduceti un email valid' };
+            return { success: false, message: this.translate('auth_invalid_email', 'Vă rugăm să introduceti un email valid') };
         }
 
         if (this.emailExists(email)) {
             console.warn('[AUTH.register] Email already exists:', email);
-            return { success: false, message: 'Acest email este deja înregistrat' };
+            return { success: false, message: this.translate('auth_email_exists', 'Acest email este deja înregistrat') };
         }
 
         if (!this.isValidPassword(password)) {
             console.warn('[AUTH.register] Invalid password length');
-            return { success: false, message: 'Parola trebuie să aibă cel puțin 6 caractere' };
+            return { success: false, message: this.translate('auth_password_length', 'Parola trebuie să aibă cel puțin 6 caractere') };
         }
 
         if (password !== confirmPassword) {
             console.warn('[AUTH.register] Passwords do not match');
-            return { success: false, message: 'Parolele nu se potrivesc' };
+            return { success: false, message: this.translate('auth_passwords_mismatch', 'Parolele nu se potrivesc') };
         }
 
         const newUser = {
@@ -322,7 +338,7 @@ class AuthManager {
 
         return {
             success: true,
-            message: 'Înregistrare reușită! Acum vă puteți autentifica.'
+            message: this.translate('auth_registration_success', 'Înregistrare reușită! Acum vă puteți autentifica.')
         };
     }
 
@@ -334,7 +350,7 @@ class AuthManager {
         
         if (!this.isValidEmail(email)) {
             console.warn('[AUTH.login] Invalid email format:', email);
-            return { success: false, message: 'Vă rugăm să introduceti un email valid' };
+            return { success: false, message: this.translate('auth_invalid_email', 'Vă rugăm să introduceti un email valid') };
         }
 
         const users = this.getAllUsers();
@@ -344,7 +360,7 @@ class AuthManager {
 
         if (!user) {
             console.warn('[AUTH.login] User not found:', email);
-            return { success: false, message: 'Email sau parolă incorectă' };
+            return { success: false, message: this.translate('auth_login_invalid_credentials', 'Email sau parolă incorectă') };
         }
 
         console.log('[AUTH.login] User found:', user.email);
@@ -357,7 +373,7 @@ class AuthManager {
         
         if (user.password !== passwordHash) {
             console.warn('[AUTH.login] Password mismatch for user:', email);
-            return { success: false, message: 'Email sau parolă incorectă' };
+            return { success: false, message: this.translate('auth_login_invalid_credentials', 'Email sau parolă incorectă') };
         }
 
         console.log('[AUTH.login] Password verified, creating session');
@@ -367,7 +383,8 @@ class AuthManager {
             name: user.name,
             email: user.email,
             phone: user.phone,
-            avatar: user.avatar || this.getGravatarUrl(user.email),
+            // Always generate avatar from current email to ensure Gravatar reflects the email
+            avatar: this.getGravatarUrl(user.email),
             loginTime: new Date().toISOString()
         };
 
@@ -377,7 +394,7 @@ class AuthManager {
 
         return {
             success: true,
-            message: 'Autentificare reușită!',
+            message: this.translate('auth_login_success', 'Autentificare reușită!'),
             user: sessionUser
         };
     }
@@ -391,7 +408,7 @@ class AuthManager {
             console.log('[AUTH] ✓ User logged out:', currentUser.email);
         }
         localStorage.removeItem(this.currentUserKey);
-        return { success: true, message: 'Deconectare reușită' };
+        return { success: true, message: this.translate('auth_logout_success', 'Deconectare reușită') };
     }
 
     /**
@@ -402,7 +419,7 @@ class AuthManager {
         const userIndex = users.findIndex(u => u.id === userId);
 
         if (userIndex === -1) {
-            return { success: false, message: 'Utilizator nu găsit' };
+            return { success: false, message: this.translate('auth_user_not_found', 'Utilizator nu găsit') };
         }
 
         const user = users[userIndex];
@@ -429,13 +446,14 @@ class AuthManager {
                 ...currentUser,
                 name: user.name,
                 email: user.email,
-                phone: user.phone
+                phone: user.phone,
+                avatar: this.getGravatarUrl(user.email)
             };
             localStorage.setItem(this.currentUserKey, JSON.stringify(sessionUser));
         }
 
         console.log('[AUTH] ✓ User profile updated:', user.email);
-        return { success: true, message: 'Profil actualizat cu succes', user };
+        return { success: true, message: this.translate('auth_profile_updated', 'Profil actualizat cu succes'), user };
     }
 
     /**
@@ -443,23 +461,23 @@ class AuthManager {
      */
     changePassword(userId, oldPassword, newPassword, confirmNewPassword) {
         if (!this.isValidPassword(newPassword)) {
-            return { success: false, message: 'Parola nouă trebuie să aibă cel puțin 6 caractere' };
+            return { success: false, message: this.translate('auth_password_length', 'Parola nouă trebuie să aibă cel puțin 6 caractere') };
         }
 
         if (newPassword !== confirmNewPassword) {
-            return { success: false, message: 'Parolele noi nu se potrivesc' };
+            return { success: false, message: this.translate('auth_passwords_mismatch', 'Parolele noi nu se potrivesc') };
         }
 
         const users = this.getAllUsers();
         const user = users.find(u => u.id === userId);
 
         if (!user) {
-            return { success: false, message: 'Utilizator nu găsit' };
+            return { success: false, message: this.translate('auth_user_not_found', 'Utilizator nu găsit') };
         }
 
         const oldPasswordHash = this.hashPassword(oldPassword);
         if (user.password !== oldPasswordHash) {
-            return { success: false, message: 'Parola curentă este incorectă' };
+            return { success: false, message: this.translate('auth_password_incorrect', 'Parola curentă este incorectă') };
         }
 
         const userIndex = users.findIndex(u => u.id === userId);
@@ -468,7 +486,7 @@ class AuthManager {
         localStorage.setItem(this.usersKey, JSON.stringify(users));
 
         console.log('[AUTH] ✓ Password changed for:', user.email);
-        return { success: true, message: 'Parolă schimbată cu succes' };
+        return { success: true, message: this.translate('auth_password_changed', 'Parolă schimbată cu succes') };
     }
 
     /**
@@ -479,12 +497,12 @@ class AuthManager {
         const user = users.find(u => u.id === userId);
 
         if (!user) {
-            return { success: false, message: 'Utilizator nu găsit' };
+            return { success: false, message: this.translate('auth_user_not_found', 'Utilizator nu găsit') };
         }
 
         const passwordHash = this.hashPassword(password);
         if (user.password !== passwordHash) {
-            return { success: false, message: 'Parolă incorectă' };
+            return { success: false, message: this.translate('auth_password_incorrect', 'Parolă incorectă') };
         }
 
         const updatedUsers = users.filter(u => u.id !== userId);
@@ -496,7 +514,7 @@ class AuthManager {
         }
 
         console.log('[AUTH] ✓ Account deleted:', user.email);
-        return { success: true, message: 'Cont șters cu succes' };
+        return { success: true, message: this.translate('auth_account_deleted', 'Cont șters cu succes') };
     }
 
     /**

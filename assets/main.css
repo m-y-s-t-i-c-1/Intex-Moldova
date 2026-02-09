@@ -1211,7 +1211,7 @@ body.dark-mode #search-input {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.45);
     z-index: 1000;
     animation: fadeIn 0.3s ease;
 }
@@ -1223,25 +1223,40 @@ body.dark-mode #search-input {
     transform: translate(-50%, -50%);
     background: var(--card-bg);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 1.25rem;
     width: 90%;
-    max-width: 400px;
-    box-shadow: var(--box-glow);
-    border: var(--card-border);
+    max-width: 360px;
+    max-height: 80vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.45), var(--box-glow);
+    border: 1px solid rgba(255,255,255,0.04);
+    backdrop-filter: blur(6px) saturate(120%);
+    transition: transform 180ms ease, opacity 180ms ease;
 }
 
 .login-content .close-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 24px;
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 50%;
+    font-size: 20px;
     cursor: pointer;
     color: var(--text-muted);
-    transition: color 0.3s ease;
+    transition: background 140ms ease, color 140ms ease, transform 120ms ease;
 }
 
 .login-content .close-btn:hover {
-    color: var(--action);
+    background: rgba(0,0,0,0.06);
+    color: var(--text-main);
+    transform: translateY(-1px);
 }
 
 .login-tabs {
@@ -1263,9 +1278,14 @@ body.dark-mode #search-input {
 }
 
 .tab-btn.active {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
+    color: var(--text-main);
+    background: linear-gradient(90deg, rgba(14,165,233,0.08), rgba(99,102,241,0.04));
+    border-radius: 8px;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.02);
+    border-bottom-color: transparent;
 }
+
+.tab-btn:not(.active) { opacity: 0.85; }
 
 .form-container {
     display: none;
@@ -1282,27 +1302,74 @@ body.dark-mode #search-input {
     font-weight: 700;
 }
 
+/* Style primary action inside modal */
+.login-content .btn-main {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 8px 18px rgba(99,102,241,0.12);
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+.login-content .btn-main:hover { transform: translateY(-2px); }
+
+/* custom scrollbar for modal */
+.login-content::-webkit-scrollbar { width: 10px; }
+.login-content::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 10px; }
+.login-content::-webkit-scrollbar-track { background: transparent; }
+
+/* Order confirmation modal */
+.order-confirmation {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.45);
+    z-index: 3000;
+}
+.order-confirmation-card {
+    width: 92%;
+    max-width: 520px;
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(2,6,23,0.45);
+    text-align: center;
+    position: relative;
+}
+.order-confirmation-card h2 { margin-top: 8px; margin-bottom: 10px; color: var(--text-main); }
+.order-confirmation-card p { color: var(--text-muted); margin-bottom: 18px; }
+.order-confirmation-card .order-confirm-icon {
+    width: 72px; height: 72px; border-radius: 50%; display:inline-flex; align-items:center; justify-content:center; font-size:32px;
+    background: linear-gradient(90deg, rgba(34,197,94,0.12), rgba(16,185,129,0.08)); color: #10b981; margin: 0 auto; box-shadow: 0 6px 18px rgba(16,185,129,0.08);
+}
+.order-confirmation-card .order-confirm-actions { display:flex; gap:12px; justify-content:center; margin-top:8px; }
+.order-confirmation-card .btn-ghost { background: transparent; color: var(--text-main); border: 1px solid rgba(0,0,0,0.06); }
+.order-confirmation-card .order-confirm-close { position:absolute; top:10px; right:10px; background:transparent; border:none; font-size:22px; cursor:pointer; color:var(--text-muted); }
+
 .form-group {
     margin-bottom: 1.25rem;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--text-main);
-}
 
+.form-group label { font-size: 0.9rem; color: var(--text-muted); display:block; margin-bottom: 0.35rem; }
 .form-group input {
     width: 100%;
-    padding: 1rem;
-    border: 1px solid var(--card-border);
-    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
     background: var(--card-bg);
     color: var(--text-main);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
 }
+.form-group input:focus { outline: none; border-color: var(--primary); box-shadow: 0 4px 18px rgba(99,102,241,0.12); }
 
 .form-group input:focus {
     outline: none;
@@ -1358,6 +1425,37 @@ body.dark-mode #search-input {
     align-items: center;
     justify-content: center;
 }
+
+/* User menu dropdown */
+.user-menu {
+    width: 240px;
+    background: var(--card-bg);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 10px 30px rgba(2,6,23,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 2000;
+    font-size: 0.95rem;
+}
+.user-menu-arrow {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--card-bg);
+    transform: rotate(45deg);
+    left: 24px;
+    top: -8px;
+    border-left: 1px solid rgba(0,0,0,0.04);
+    border-top: 1px solid rgba(0,0,0,0.04);
+}
+.user-menu-body { padding: 12px; }
+.user-menu-header { display:flex; gap:12px; align-items:center; }
+.user-menu-avatar { width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(0,0,0,0.06); }
+.user-menu-info { overflow: hidden; }
+.user-menu-name { font-weight:700; color:var(--text-main); white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+.user-menu-email { font-size:0.86rem; color:var(--text-muted); white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+.user-menu-actions { margin-top:12px; display:flex; gap:8px; justify-content:flex-end; }
+.user-menu .btn-main { padding: 0.45rem 0.75rem; border-radius:8px; font-size:0.9rem; }
 
 .login-btn:hover {
     background: var(--primary);

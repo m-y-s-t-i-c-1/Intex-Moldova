@@ -38,7 +38,9 @@ function displayCheckoutItems() {
         emptyMsg.style.textAlign = 'center';
         emptyMsg.style.padding = '20px';
         emptyMsg.style.color = 'var(--text-secondary)';
-        emptyMsg.textContent = 'Coșul este gol';
+        const lang = getLang();
+        const t = (window.translations && window.translations[lang]) ? window.translations[lang] : (window.translations && window.translations.ro) || {};
+        emptyMsg.textContent = t.cart_empty || 'Coșul este gol';
         container.appendChild(emptyMsg);
         return;
     }
@@ -125,7 +127,9 @@ function submitOrder() {
     const form = document.getElementById('checkout-form');
     
     if (!form.checkValidity()) {
-        alert('Completați toate câmpurile obligatorii!');
+        const lang = getLang();
+        const t = (window.translations && window.translations[lang]) ? window.translations[lang] : (window.translations && window.translations.ro) || {};
+        alert(t.fill_required || 'Completați toate câmpurile obligatorii!');
         return;
     }
     
@@ -150,11 +154,57 @@ function submitOrder() {
     // Clear cart
     localStorage['intex_cart'] = JSON.stringify([]);
     
-    // Show success message
-    alert('Comanda a fost plasată cu succes! Veți fi contactat în curând pentru confirmare.');
-    
-    // Redirect to products page
-    window.location.href = './produse.html';
+    // Show success toast (if available)
+    if (window.showSuccess) {
+        const lang = getLang();
+        const t = (window.translations && window.translations[lang]) ? window.translations[lang] : (window.translations && window.translations.ro) || {};
+        window.showSuccess(t.order_placed_toast || 'Comanda a fost plasată cu succes!');
+    }
+
+    // Show a styled order confirmation modal
+    try {
+        const existing = document.querySelector('.order-confirmation');
+        if (existing) existing.remove();
+
+        const modal = document.createElement('div');
+        modal.className = 'order-confirmation';
+        const orderId = 'ORD-' + Date.now().toString().slice(-6);
+        const lang = getLang();
+        const t = (window.translations && window.translations[lang]) ? window.translations[lang] : (window.translations && window.translations.ro) || {};
+        modal.innerHTML = `
+            <div class="order-confirmation-card">
+                <button class="order-confirm-close" aria-label="Închide">&times;</button>
+                <div class="order-confirm-icon">✓</div>
+                <h2>${t.order_confirm_title || 'Comanda a fost plasată!'}</h2>
+                <p>${(t.order_confirm_message || 'Mulțumim pentru cumpărături. Comanda ta ({orderId}) a fost înregistrată. Vei fi contactat în curând pentru confirmare și detalii de livrare.').replace('{orderId}', orderId)}</p>
+                <div class="order-confirm-actions">
+                    <button class="btn-main" id="oc-view-orders">${t.order_view_orders || 'Vezi comenzile'}</button>
+                    <button class="btn-main btn-ghost" id="oc-continue">${t.order_continue || 'Continuă cumpărăturile'}</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+
+        // Handlers
+        modal.querySelector('.order-confirm-close').addEventListener('click', () => {
+            modal.remove(); document.body.style.overflow = '';
+            window.location.href = './produse.html';
+        });
+        modal.querySelector('#oc-continue').addEventListener('click', () => {
+            modal.remove(); document.body.style.overflow = '';
+            window.location.href = './produse.html';
+        });
+        modal.querySelector('#oc-view-orders').addEventListener('click', () => {
+            modal.remove(); document.body.style.overflow = '';
+            // If there's an orders page implement later, for now redirect to products
+            window.location.href = './produse.html';
+        });
+    } catch (e) {
+        // Fallback
+        window.location.href = './produse.html';
+    }
 }
 
 // Get all products (merged from data.js and using descriptions)
